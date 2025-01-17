@@ -1,0 +1,311 @@
+
+/* Styles for the stats grid */
+.stats-grid {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    flex: 1;
+    min-width: 200px;
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.stat-title {
+    font-size: 1.1rem;
+    color: black;
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.stat-subtitle {
+    font-size: 0.9rem;
+    color: #4a5568;
+}
+.dashboard-section h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.dashboard-section p {
+    margin-bottom: 20px;
+}
+
+/* Styles for the cyclone table */
+.cyclone-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.cyclone-table th,
+.cyclone-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.cyclone-table th {
+    background-color: #f0f8ff;
+    color: #2b6cb0;
+}
+
+.cyclone-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+/* Styles for the dropdown headings */
+.dropdown-heading {
+    cursor: pointer;
+    color: #2bb043;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f1f9f2;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-heading:hover {
+    background-color: #d9f6dc;
+}
+
+/* Consistent image sizing */
+.chart-image {
+    max-width: 90%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Styles for the landslide table */
+.landslide-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.landslide-table th,
+.landslide-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.landslide-table th {
+    background-color: #f1f9f2;
+    color: black;
+}
+
+.landslide-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.landslide-major {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.landslide-major th,
+.landslide-major td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.landslide-major th {
+    background-color: #f1f9f2;
+    color: black;
+}
+
+.landslide-major tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Chart container to ensure enough space for each graph */
+.chart-container {
+    margin-bottom: 30px;  /* Adds space between each chart */
+    padding: 20px;
+    border: 1px solid #ddd; /* Optional: adds a border around each chart */
+    border-radius: 10px; /* Optional: adds rounded corners */
+    
+    display: block;
+    width: 100%; /* Ensure the container takes full width */
+    box-sizing: border-box; /* Makes sure padding is included in the width calculation */
+}
+
+/* Ensure that the images are responsive */
+.chart img {
+    width: 60%; /* Makes the images take up the full width of the container */
+    max-width: 50%; /* Prevents overflow of images */
+    height: 90%; /* Maintains aspect ratio */
+    object-fit: contain; /* Ensures images don't get stretched */
+}
+
+/* Optional: Align charts to center */
+.chart-container .chart {
+    text-align: center;
+}
+
+/* To make sure charts don't overflow and stay inside bounds */
+#floods-magnitude {
+    padding: 20px;
+    display: flex;
+    flex-direction: column; /* Stack all charts vertically */
+    align-items: center; /* Align charts to the center */
+    justify-content: center;
+    width: 100%;
+}
+
+/* To ensure a responsive layout */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+/* Optional: Set max height for the charts to prevent them from overflowing */
+.chart-container {
+    max-height: 500px; /* You can adjust this value based on the graph sizes */
+    overflow: hidden; /* Ensures no overflow from the chart containers */
+}
+
+/* For Major Events container */
+#floods-events {
+    display: block;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.major-events-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);  /* Two columns per row */
+    gap: 20px;  /* Gap between charts */
+    margin-bottom: 30px;
+    overflow-x: auto;  /* To allow horizontal scroll if charts overflow */
+}
+
+/* Ensuring each chart has proper padding and margin */
+.chart-container {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    display: block;
+    width: 100%; /* Ensures each chart takes the full width */
+}
+
+/* Control image size so it fits inside the container */
+.chart img {
+    width: 100%;  /* Makes sure images scale inside their containers */
+    height: auto;
+    border: 1px solid #ddd;
+    margin-top: 10px;
+    object-fit: contain; /* Prevents stretching of images */
+}
+
+/* Optional: Align charts to center */
+.chart-container .chart {
+    text-align: center;
+}
+
+/* Adding responsive styles */
+@media screen and (max-width: 768px) {
+    .major-events-container {
+        grid-template-columns: 1fr; /* Stack images vertically on smaller screens */
+    }
+}
+
+.chart-container {
+    max-height: 600px; 
+    overflow: auto; 
+}
+
+.trends-table {
+    width: 100%;
+    height: auto;
+    border-collapse: collapse;
+    margin-top: 20px;
+    table-layout:calc(); 
+    max-width: 100%; 
+    word-wrap: break-word;
+}
+
+.trends-table th,
+.trends-table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.trends-table th {
+    background-color: #f0f8ff;
+    font-weight: bold;
+}
+
+.trends-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.trends-table tr:hover {
+    background-color: #f1f9f2;
+}
+
+#floods-trends {
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden; 
+}
+
+.chart-container {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.trends-table th, .trends-table td {
+    font-size: 1rem;
+}
+
+
+
+/* Button styling */
+.box {
+    background: rgba(50, 50, 50, 0.6); /* Semi-transparent grey */
+    color: rgb(7, 6, 6);
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.box:hover {
+    transform: translateY(-5px);
+    background: rgba(176, 172, 172, 0.8); /* Darker on hover */
+}
+
+/* Other enhancements */
+h1, h2 {
+    color: #0d0d0d;
+    
+}

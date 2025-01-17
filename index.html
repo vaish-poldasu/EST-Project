@@ -1,0 +1,3197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <meta charset="UTF-8">
+    <title>EcoTeam - Environmental Analysis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family:'Times New Roman', Times, serif;
+        }
+
+        body {
+            padding-top: 15%;
+            background: url('background-image.jpg') no-repeat center center fixed;
+            background-size: cover; /* This makes the image cover the whole screen */
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            color: #040404;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        h2 {
+            color: #0c0d0d;
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: #718096;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .main-options,
+        .sub-options {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .box {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            width: 500px;
+            height: 100px;
+            text-align: center;
+            font-size: 30px;
+        }
+
+        .box:hover {
+            transform: translateY(-5px);
+        }
+
+        .dashboard {
+            display: none;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #f1f9f2;
+            padding-bottom: 1rem;
+        }
+
+        .tab {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            color: #4a5568;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab.active {
+            background: #f1f9f2;
+            color: black;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgb(255, 255, 255);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .stat-title {
+            color: #718096;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            color: #2d3748;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-subtitle {
+            color: #718096;
+            font-size: 0.875rem;
+        }
+
+        .dashboard-section {
+            margin-bottom: 2rem;
+        }
+
+        .dashboard h3 {
+            color: #2c5840;
+            margin-bottom: 1rem;
+        }
+
+        .chart {
+            background: #0e0b0b;
+            height: 300px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .back-btn {
+            background: #2c5840;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+
+        /* earthquake contents */
+        .container2 {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .chart-containerc {
+            height: 350px;
+            padding: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chart-container {
+                width: 100%;
+                overflow-x: auto;
+            }
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .metric-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .metric-item:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            color: #666;
+        }
+
+        .metric-value {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .earthquake-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .earthquake-table th {
+            background-color: #3498db;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .earthquake-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .earthquake-table tr:hover {
+            background-color: #f5f6fa;
+        }
+
+        .magnitude {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .timeline {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .timeline-item {
+            padding: 15px;
+            border-left: 3px solid #3498db;
+            margin-bottom: 15px;
+            background: white;
+        }
+
+        .timeline-date {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .impact-analysis {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .depth-indicator {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: #2ecc71;
+            color: white;
+            font-size: 0.9em;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            <h1>EcoTeam</h1>
+            <h2>An environmental analysis of India</h2>
+        </div>
+
+        <div id="main-options" class="main-options">
+            <div class="box" onclick="showSubOptions('climate')">Climate Analysis</div>
+            <div class="box" onclick="showSubOptions('disasters')">Disasters</div>
+        </div>
+
+        <div id="climate-options" class="sub-options" style="display: none;">
+            <div onclick="goBack('main')" class="box">← Back</div>
+            <div class="box" onclick="showDashboard('rainfall')">Rainfall</div>
+            <div class="box" onclick="showDashboard('temperature')">Temperature</div>
+        </div>
+
+
+        <div id="disaster-options" class="sub-options" style="display: none;">
+            <div onclick="goBack('main')" class="box">← Back</div>
+            <div class="box" onclick="showDashboard('floods')">Floods</div>
+            <div class="box" onclick="showDashboard('cyclones')">Cyclones</div>
+            <div class="box" onclick="showDashboard('earthquake')">Earthquake</div>
+            <div class="box" onclick="showDashboard('landslide')">Landslide</div>
+        </div>
+
+        <div id="dashboard" class="dashboard">
+            <div onclick="goBack('options')" class="box" style="width: fit-content; margin-bottom: 20px;">← Back</div>
+
+            <div id="dashboard-content">
+                <h2 id="dashboard-title"></h2>
+
+                <div class="tabs">
+                    <div class="tab active" onclick="switchTab('overview')">📊 Overview</div>
+                    <div class="tab" onclick="switchTab('magnitude')">📈 Magnitude Analysis</div>
+                    <div class="tab" onclick="switchTab('trends')">📉 Trends</div>
+                    <div class="tab" onclick="switchTab('events')">🕒 Major Events</div>
+                </div>
+               
+                
+
+                <!-- rainfall start here -->
+                <div id="rainfall-content" style="display: none;">
+                    <div id="rainfall-overview" class="tab-content">
+                        <div id="dashboard-section">
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-title">Time Period Covered</div>
+                                    <div class="stat-value">1901 to 2015</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">Geographic Coverage</div>
+                                    <div class="stat-value">35 Regions</div>
+                                    <div class="stat-subtitle">Andaman & Nicobar Islands, Arunachal Pradesh, Assam & Meghalaya, etc.</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">Total Data Points</div>
+                                    <div class="stat-value">4,116</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">Overall Avg. Annual Rainfall</div>
+                                    <div class="stat-value">1411.01 mm</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">Min. Annual Rainfall</div>
+                                    <div class="stat-value">62.3 mm</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">Max. Annual Rainfall</div>
+                                    <div class="stat-value">6331.1 mm</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">Avg. Rainfall (Jan-Feb)</div>
+                                    <div class="stat-value">40.75 mm</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">Avg. Rainfall (Mar-May)</div>
+                                    <div class="stat-value">155.90 mm</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">Avg. Rainfall (Jun-Sep)</div>
+                                    <div class="stat-value">1064.72 mm</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">Avg. Rainfall (Oct-Dec)</div>
+                                    <div class="stat-value">154.10 mm</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">Rainfall Trend</div>
+                                    <div class="stat-value">Decreasing</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">Wettest Subdivision</div>
+                                    <div class="stat-value">Arunachal Pradesh</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">Driest Subdivision</div>
+                                    <div class="stat-value">West Rajasthan</div>
+                                </div>
+                            </div>
+                            
+                        </div>
+
+                        
+                    </div>
+
+                    <div id="rainfall-magnitude" class="tab-content">
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Tripuraseasonal')">NAGA MANI MIZO TRIPURA
+                                Seasonal Rainfall</h3>
+                            <img id="Tripuraseasonal"
+                                src="./climate_plots/rainfall_plots/NAGA MANI MIZO TRIPURA_seasonal_rainfall.png"
+                                alt="NAGA MANI MIZO TRIPURA Seasonal Rainfall" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Andamanseasonal')">ANDAMAN & NICOBAR
+                                ISLANDS Seasonal Rainfall</h3>
+                            <img id="Andamanseasonal"
+                                src="./climate_plots/rainfall_plots/ANDAMAN & NICOBAR ISLANDS_seasonal_rainfall.png"
+                                alt="ANDAMAN & NICOBAR ISLANDS Seasonal Rainfall" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('ARUNACHALseasonal')">ARUNACHAL PRADESH
+                                Seasonal Rainfall</h3>
+                            <img id="ARUNACHALseasonal"
+                                src="./climate_plots/rainfall_plots/ARUNACHAL PRADESH_seasonal_rainfall.png"
+                                alt="AARUNACHAL PRADESH Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('ASSAM&MEGHALAYAseasonal')">ASSAM &
+                                MEGHALAYA Seasonal Rainfall</h3>
+                            <img id="ASSAM&MEGHALAYAseasonal"
+                                src="./climate_plots/rainfall_plots/ASSAM & MEGHALAYA_seasonal_rainfall.png"
+                                alt="ASSAM & MEGHALAYA Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('BIHARseasonal')">BIHAR Seasonal Rainfall
+                            </h3>
+                            <img id="BIHARseasonal" src="./climate_plots/rainfall_plots/BIHAR_seasonal_rainfall.png"
+                                alt="BIHAR Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('CHHATTISGARHseasonal')">CHHATTISGARH
+                                Seasonal Rainfall</h3>
+                            <img id="CHHATTISGARHseasonal"
+                                src="./climate_plots/rainfall_plots/CHHATTISGARH_seasonal_rainfall.png"
+                                alt="CHHATTISGARH Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('COASTAL ANDHRA PRADESHseasonal')">COASTAL
+                                ANDHRA PRADESH Seasonal Rainfall</h3>
+                            <img id="COASTAL ANDHRA PRADESHseasonal"
+                                src="./climate_plots/rainfall_plots/COASTAL ANDHRA PRADESH_seasonal_rainfall.png"
+                                alt="COASTAL ANDHRA PRADESH Seasonal Rainfall" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('COASTAL KARNATAKAseasonal')">COASTAL
+                                KARNATAKA Seasonal Rainfall</h3>
+                            <img id="COASTAL KARNATAKAseasonal"
+                                src="./climate_plots/rainfall_plots/COASTAL KARNATAKA_seasonal_rainfall.png"
+                                alt="COASTAL KARNATAKA Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('EAST MADHYA PRADESHseasonal')">EAST
+                                MADHYA PRADESH Seasonal Rainfall</h3>
+                            <img id="EAST MADHYA PRADESHseasonal"
+                                src="./climate_plots/rainfall_plots/EAST MADHYA PRADESH_seasonal_rainfall.png"
+                                alt="EAST MADHYA PRADESH Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('EAST RAJASTHANseasonal')">EAST RAJASTHAN
+                                Seasonal Rainfall</h3>
+                            <img id="EAST RAJASTHANseasonal"
+                                src="./climate_plots/rainfall_plots/EAST RAJASTHAN_seasonal_rainfall.png"
+                                alt="EAST RAJASTHAN Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('EAST UTTAR PRADESHseasonal')">EAST UTTAR
+                                PRADESH Seasonal Rainfall</h3>
+                            <img id="EAST UTTAR PRADESHseasonal"
+                                src="./climate_plots/rainfall_plots/EAST UTTAR PRADESH_seasonal_rainfall.png"
+                                alt="EAST UTTAR PRADESH Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('GANGETIC WEST BENGALseasonal')">GANGETIC
+                                WEST BENGAL Seasonal Rainfall</h3>
+                            <img id="GANGETIC WEST BENGALseasonal"
+                                src="./climate_plots/rainfall_plots/GANGETIC WEST BENGAL_seasonal_rainfall.png"
+                                alt="GANGETIC WEST BENGAL Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('GUJARAT REGION seasonal')">GUJARAT REGION
+                                Seasonal Rainfall</h3>
+                            <img id="GUJARAT REGION seasonal"
+                                src="./climate_plots/rainfall_plots/GUJARAT REGION_seasonal_rainfall.png"
+                                alt="GUJARAT REGION Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('HARYANA DELHI & CHANDIGARH seasonal')">
+                                HARYANA DELHI & CHANDIGARH Seasonal Rainfall</h3>
+                            <img id="HARYANA DELHI & CHANDIGARH seasonal"
+                                src="./climate_plots/rainfall_plots/HARYANA DELHI & CHANDIGARH_seasonal_rainfall.png"
+                                alt="HARYANA DELHI & CHANDIGARH Seasonal Rainfall" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('HIMACHAL PRADESH seasonal')">HIMACHAL
+                                PRADESH Seasonal Rainfall</h3>
+                            <img id="HIMACHAL PRADESH seasonal"
+                                src="./climate_plots/rainfall_plots/HIMACHAL PRADESH_seasonal_rainfall.png"
+                                alt="HIMACHAL PRADESH Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('JAMMU & KASHMIR seasonal')">JAMMU &
+                                KASHMIR Seasonal Rainfall</h3>
+                            <img id="JAMMU & KASHMIR seasonal"
+                                src="./climate_plots/rainfall_plots/JAMMU & KASHMIR_seasonal_rainfall.png"
+                                alt="JAMMU & KASHMIR Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('JHARKHAND seasonal')">JHARKHAND Seasonal
+                                Rainfall</h3>
+                            <img id="JHARKHAND seasonal"
+                                src="./climate_plots/rainfall_plots/JHARKHAND_seasonal_rainfall.png"
+                                alt="JHARKHAND Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('KERALA seasonal')">KERALA Seasonal
+                                Rainfall</h3>
+                            <img id="KERALA seasonal" src="./climate_plots/rainfall_plots/KERALA_seasonal_rainfall.png"
+                                alt="KERALA Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('KONKAN & GOA seasonal')">KONKAN & GOA
+                                Seasonal Rainfall</h3>
+                            <img id="KONKAN & GOA seasonal"
+                                src="./climate_plots/rainfall_plots/KONKAN & GOA_seasonal_rainfall.png"
+                                alt="KONKAN & GOA Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('LAKSHADWEEP seasonal')">LAKSHADWEEP
+                                Seasonal Rainfall</h3>
+                            <img id="LAKSHADWEEP seasonal"
+                                src="./climate_plots/rainfall_plots/LAKSHADWEEP_seasonal_rainfall.png"
+                                alt="LAKSHADWEEP Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('MADHYA MAHARASHTRA seasonal')">MADHYA
+                                MAHARASHTRA Seasonal Rainfall</h3>
+                            <img id="MADHYA MAHARASHTRA"
+                                src="./climate_plots/rainfall_plots/MADHYA MAHARASHTRA_seasonal_rainfall.png"
+                                alt="MADHYA MAHARASHTRA Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('MATATHWADA seasonal')">MATATHWADA
+                                Seasonal Rainfall</h3>
+                            <img id="MATATHWADA seasonal"
+                                src="./climate_plots/rainfall_plots/MATATHWADA_seasonal_rainfall.png"
+                                alt="MATATHWADA Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('NORTH INTERIOR KARNATAKA seasonal')">
+                                NORTH INTERIOR KARNATAKA Seasonal Rainfall</h3>
+                            <img id="NORTH INTERIOR KARNATAKA seasonal"
+                                src="./climate_plots/rainfall_plots/NORTH INTERIOR KARNATAKA_seasonal_rainfall.png"
+                                alt="NORTH INTERIOR KARNATAKA Seasonal Rainfall" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('ORISSA seasonal')">ORISSA Seasonal
+                                Rainfall</h3>
+                            <img id="ORISSA seasonal" src="./climate_plots/rainfall_plots/ORISSA_seasonal_rainfall.png"
+                                alt="ORISSA Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('PUNJAB seasonal')">PUNJAB Seasonal
+                                Rainfall</h3>
+                            <img id="PUNJAB seasonal" src="./climate_plots/rainfall_plots/PUNJAB_seasonal_rainfall.png"
+                                alt="PUNJAB Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('RAYALSEEMA seasonal')">RAYALSEEMA
+                                Seasonal Rainfall</h3>
+                            <img id="RAYALSEEMA seasonal"
+                                src="./climate_plots/rainfall_plots/RAYALSEEMA_seasonal_rainfall.png"
+                                alt="RAYALSEEMA Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('SAURASHTRA & KUTCH seasonal')">SAURASHTRA
+                                & KUTCH Seasonal Rainfall</h3>
+                            <img id="SAURASHTRA & KUTCH seasonal"
+                                src="./climate_plots/rainfall_plots/SAURASHTRA & KUTCH_seasonal_rainfall.png"
+                                alt="SAURASHTRA & KUTCH Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('SOUTH INTERIOR KARNATAKA seasonal')">
+                                SOUTH INTERIOR KARNATAKA Seasonal Rainfall</h3>
+                            <img id="SOUTH INTERIOR KARNATAKA seasonal"
+                                src="./climate_plots/rainfall_plots/SOUTH INTERIOR KARNATAKA_seasonal_rainfall.png"
+                                alt="SOUTH INTERIOR KARNATAKA Seasonal Rainfall" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading"
+                                onclick="toggleChart('SUB HIMALAYAN WEST BENGAL & SIKKIM seasonal')">SUB HIMALAYAN WEST
+                                BENGAL & SIKKIM Seasonal Rainfall</h3>
+                            <img id="SUB HIMALAYAN WEST BENGAL & SIKKIM seasonal"
+                                src="./climate_plots/rainfall_plots/SUB HIMALAYAN WEST BENGAL & SIKKIM_seasonal_rainfall.png"
+                                alt="SUB HIMALAYAN WEST BENGAL & SIKKIM Seasonal Rainfall" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('TAMIL NADU seasonal')">TAMIL NADU
+                                Seasonal Rainfall</h3>
+                            <img id="TAMIL NADU seasonal"
+                                src="./climate_plots/rainfall_plots/TAMIL NADU_seasonal_rainfall.png"
+                                alt="TAMIL NADU Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('TELANGANA seasonal')">TELANGANA Seasonal
+                                Rainfall</h3>
+                            <img id="TELANGANA seasonal"
+                                src="./climate_plots/rainfall_plots/TELANGANA_seasonal_rainfall.png"
+                                alt="TELANGANA Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('UTTARAKHAND seasonal')">UTTARAKHAND
+                                Seasonal Rainfall</h3>
+                            <img id="UTTARAKHAND seasonal"
+                                src="./climate_plots/rainfall_plots/UTTARAKHAND_seasonal_rainfall.png"
+                                alt="UTTARAKHAND Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('VIDARBHA seasonal')">VIDARBHA Seasonal
+                                Rainfall</h3>
+                            <img id="VIDARBHA seasonal"
+                                src="./climate_plots/rainfall_plots/VIDARBHA_seasonal_rainfall.png"
+                                alt="VIDARBHA Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('WEST MADHYA PRADESH seasonal')">WEST
+                                MADHYA PRADESH Seasonal Rainfall</h3>
+                            <img id="WEST MADHYA PRADESH seasonal"
+                                src="./climate_plots/rainfall_plots/WEST MADHYA PRADESH_seasonal_rainfall.png"
+                                alt="WEST MADHYA PRADESH Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('WEST RAJASTHAN seasonal')">WEST RAJASTHAN
+                                Seasonal Rainfall</h3>
+                            <img id="WEST RAJASTHAN seasonal"
+                                src="./climate_plots/rainfall_plots/WEST RAJASTHAN_seasonal_rainfall.png"
+                                alt="WEST RAJASTHAN Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('WEST UTTAR PRADESH seasonal')">WEST UTTAR
+                                PRADESH Seasonal Rainfall</h3>
+                            <img id="WEST UTTAR PRADESH seasonal"
+                                src="./climate_plots/rainfall_plots/WEST UTTAR PRADESH_seasonal_rainfall.png"
+                                alt="WEST UTTAR PRADESH Seasonal Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+
+                    </div>
+
+                    <div id="rainfall-trends" class="tab-content" style="display: none;">
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Tripuraannual')">NAGA MANI MIZO TRIPURA
+                                Annual Rainfall</h3>
+                            <img id="Tripuraannual"
+                                src="./climate_plots/rainfall_plots/NAGA MANI MIZO TRIPURA_annual_rainfall.png"
+                                alt="NAGA MANI MIZO TRIPURA annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Andamanannual')">ANDAMAN & NICOBAR
+                                ISLANDS Annual Rainfall</h3>
+                            <img id="Andamanannual"
+                                src="./climate_plots/rainfall_plots/ANDAMAN & NICOBAR ISLANDS_annual_rainfall.png"
+                                alt="ANDAMAN & NICOBAR ISLANDS annual Rainfall" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('ARUNACHALannual')">ARUNACHAL PRADESH
+                                Annual Rainfall</h3>
+                            <img id="ARUNACHALannual"
+                                src="./climate_plots/rainfall_plots/ARUNACHAL PRADESH_annual_rainfall.png"
+                                alt="AARUNACHAL PRADESH annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('ASSAM&MEGHALAYAannual')">ASSAM &
+                                MEGHALAYA Annual Rainfall</h3>
+                            <img id="ASSAM&MEGHALAYAannual"
+                                src="./climate_plots/rainfall_plots/ASSAM & MEGHALAYA_annual_rainfall.png"
+                                alt="ASSAM & MEGHALAYA annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('BIHARannual')">BIHAR Annual Rainfall</h3>
+                            <img id="BIHARannual" src="./climate_plots/rainfall_plots/BIHAR_annual_rainfall.png"
+                                alt="BIHAR annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('CHHATTISGARHannual')">CHHATTISGARH Annual
+                                Rainfall</h3>
+                            <img id="CHHATTISGARHannual"
+                                src="./climate_plots/rainfall_plots/CHHATTISGARH_annual_rainfall.png"
+                                alt="CHHATTISGARH annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('COASTAL ANDHRA PRADESHannual')">COASTAL
+                                ANDHRA PRADESH Annual Rainfall</h3>
+                            <img id="COASTAL ANDHRA PRADESHannual"
+                                src="./climate_plots/rainfall_plots/COASTAL ANDHRA PRADESH_annual_rainfall.png"
+                                alt="COASTAL ANDHRA PRADESH annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('COASTAL KARNATAKAannual')">COASTAL
+                                KARNATAKA Annual Rainfall</h3>
+                            <img id="COASTAL KARNATAKAannual"
+                                src="./climate_plots/rainfall_plots/COASTAL KARNATAKA_annual_rainfall.png"
+                                alt="COASTAL KARNATAKA annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('EAST MADHYA PRADESHannual')">EAST MADHYA
+                                PRADESH Annual Rainfall</h3>
+                            <img id="EAST MADHYA PRADESHannual"
+                                src="./climate_plots/rainfall_plots/EAST MADHYA PRADESH_annual_rainfall.png"
+                                alt="EAST MADHYA PRADESH annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('EAST RAJASTHANannual')">EAST RAJASTHAN
+                                Annual Rainfall</h3>
+                            <img id="EAST RAJASTHANannual"
+                                src="./climate_plots/rainfall_plots/EAST RAJASTHAN_annual_rainfall.png"
+                                alt="EAST RAJASTHAN annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('EAST UTTAR PRADESHannual')">EAST UTTAR
+                                PRADESH Annual Rainfall</h3>
+                            <img id="EAST UTTAR PRADESHannual"
+                                src="./climate_plots/rainfall_plots/EAST UTTAR PRADESH_annual_rainfall.png"
+                                alt="EAST UTTAR PRADESH annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('GANGETIC WEST BENGALannual')">GANGETIC
+                                WEST BENGAL Annual Rainfall</h3>
+                            <img id="GANGETIC WEST BENGALannual"
+                                src="./climate_plots/rainfall_plots/GANGETIC WEST BENGAL_annual_rainfall.png"
+                                alt="GANGETIC WEST BENGAL annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('GUJARAT REGION annual')">GUJARAT REGION
+                                Annual Rainfall</h3>
+                            <img id="GUJARAT REGION annual"
+                                src="./climate_plots/rainfall_plots/GUJARAT REGION_annual_rainfall.png"
+                                alt="GUJARAT REGION annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('HARYANA DELHI & CHANDIGARH annual')">
+                                HARYANA DELHI & CHANDIGARH Annual Rainfall</h3>
+                            <img id="HARYANA DELHI & CHANDIGARH annual"
+                                src="./climate_plots/rainfall_plots/HARYANA DELHI & CHANDIGARH_annual_rainfall.png"
+                                alt="HARYANA DELHI & CHANDIGARH annual Rainfall" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('HIMACHAL PRADESH annual')">HIMACHAL
+                                PRADESH Annual Rainfall</h3>
+                            <img id="HIMACHAL PRADESH annual"
+                                src="./climate_plots/rainfall_plots/HIMACHAL PRADESH_annual_rainfall.png"
+                                alt="HIMACHAL PRADESH annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('JAMMU & KASHMIR annual')">JAMMU & KASHMIR
+                                Annual Rainfall</h3>
+                            <img id="JAMMU & KASHMIR annual"
+                                src="./climate_plots/rainfall_plots/JAMMU & KASHMIR_annual_rainfall.png"
+                                alt="JAMMU & KASHMIR annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('JHARKHAND annual')">JHARKHAND Annual
+                                Rainfall</h3>
+                            <img id="JHARKHAND annual"
+                                src="./climate_plots/rainfall_plots/JHARKHAND_annual_rainfall.png"
+                                alt="JHARKHAND annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('KERALA annual')">KERALA Annual Rainfall
+                            </h3>
+                            <img id="KERALA annual" src="./climate_plots/rainfall_plots/KERALA_annual_rainfall.png"
+                                alt="KERALA annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('KONKAN & GOA annual')">KONKAN & GOA
+                                Annual Rainfall</h3>
+                            <img id="KONKAN & GOA annual"
+                                src="./climate_plots/rainfall_plots/KONKAN & GOA_annual_rainfall.png"
+                                alt="KONKAN & GOA annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('LAKSHADWEEP annual')">LAKSHADWEEP Annual
+                                Rainfall</h3>
+                            <img id="LAKSHADWEEP annual"
+                                src="./climate_plots/rainfall_plots/LAKSHADWEEP_annual_rainfall.png"
+                                alt="LAKSHADWEEP annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('MADHYA MAHARASHTRA annual')">MADHYA
+                                MAHARASHTRA Annual Rainfall</h3>
+                            <img id="MADHYA MAHARASHTRA annual"
+                                src="./climate_plots/rainfall_plots/MADHYA MAHARASHTRA_annual_rainfall.png"
+                                alt="MADHYA MAHARASHTRA annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('MATATHWADA annual')">MATATHWADA Annual
+                                Rainfall</h3>
+                            <img id="MATATHWADA annual"
+                                src="./climate_plots/rainfall_plots/MATATHWADA_annual_rainfall.png"
+                                alt="MATATHWADA annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('NORTH INTERIOR KARNATAKA annual')">NORTH
+                                INTERIOR KARNATAKA Annual Rainfall</h3>
+                            <img id="NORTH INTERIOR KARNATAKA annual"
+                                src="./climate_plots/rainfall_plots/NORTH INTERIOR KARNATAKA_annual_rainfall.png"
+                                alt="NORTH INTERIOR KARNATAKA annual Rainfall" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('ORISSA annual')">ORISSA Annual Rainfall
+                            </h3>
+                            <img id="ORISSA annual" src="./climate_plots/rainfall_plots/ORISSA_annual_rainfall.png"
+                                alt="ORISSA annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('PUNJAB annual')">PUNJAB Annual Rainfall
+                            </h3>
+                            <img id="PUNJAB annual" src="./climate_plots/rainfall_plots/PUNJAB_annual_rainfall.png"
+                                alt="PUNJAB annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('RAYALSEEMA annual')">RAYALSEEMA Annual
+                                Rainfall</h3>
+                            <img id="RAYALSEEMA annual"
+                                src="./climate_plots/rainfall_plots/RAYALSEEMA_annual_rainfall.png"
+                                alt="RAYALSEEMA annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('SAURASHTRA & KUTCH annual')">SAURASHTRA &
+                                KUTCH Annual Rainfall</h3>
+                            <img id="SAURASHTRA & KUTCH annual"
+                                src="./climate_plots/rainfall_plots/SAURASHTRA & KUTCH_annual_rainfall.png"
+                                alt="SAURASHTRA & KUTCH annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('SOUTH INTERIOR KARNATAKA annual')">SOUTH
+                                INTERIOR KARNATAKA Annual Rainfall</h3>
+                            <img id="SOUTH INTERIOR KARNATAKA annual"
+                                src="./climate_plots/rainfall_plots/SOUTH INTERIOR KARNATAKA_annual_rainfall.png"
+                                alt="SOUTH INTERIOR KARNATAKA annual Rainfall" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading"
+                                onclick="toggleChart('SUB HIMALAYAN WEST BENGAL & SIKKIM annual')">SUB HIMALAYAN WEST
+                                BENGAL & SIKKIM Annual Rainfall</h3>
+                            <img id="SUB HIMALAYAN WEST BENGAL & SIKKIM annual"
+                                src="./climate_plots/rainfall_plots/SUB HIMALAYAN WEST BENGAL & SIKKIM_annual_rainfall.png"
+                                alt="SUB HIMALAYAN WEST BENGAL & SIKKIM annual Rainfall" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('TAMIL NADU annual')">TAMIL NADU Annual
+                                Rainfall</h3>
+                            <img id="TAMIL NADU annual"
+                                src="./climate_plots/rainfall_plots/TAMIL NADU_annual_rainfall.png"
+                                alt="TAMIL NADU annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('TELANGANA annual')">TELANGANA Annual
+                                Rainfall</h3>
+                            <img id="TELANGANA annual"
+                                src="./climate_plots/rainfall_plots/TELANGANA_annual_rainfall.png"
+                                alt="TELANGANA annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('UTTARAKHAND annual')">UTTARAKHAND Annual
+                                Rainfall</h3>
+                            <img id="UTTARAKHAND annual"
+                                src="./climate_plots/rainfall_plots/UTTARAKHAND_annual_rainfall.png"
+                                alt="UTTARAKHAND annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('VIDARBHA annual')">VIDARBHA Annual
+                                Rainfall</h3>
+                            <img id="VIDARBHA annual" src="./climate_plots/rainfall_plots/VIDARBHA_annual_rainfall.png"
+                                alt="VIDARBHA annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('WEST MADHYA PRADESH annual')">WEST MADHYA
+                                PRADESH Annual Rainfall</h3>
+                            <img id="WEST MADHYA PRADESH annual"
+                                src="./climate_plots/rainfall_plots/WEST MADHYA PRADESH_annual_rainfall.png"
+                                alt="WEST MADHYA PRADESH annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('WEST RAJASTHAN annual')">WEST RAJASTHAN
+                                Annual Rainfall</h3>
+                            <img id="WEST RAJASTHAN annual"
+                                src="./climate_plots/rainfall_plots/WEST RAJASTHAN_annual_rainfall.png"
+                                alt="WEST RAJASTHAN annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('WEST UTTAR PRADESH annual')">WEST UTTAR
+                                PRADESH Annual Rainfall</h3>
+                            <img id="WEST UTTAR PRADESH annual"
+                                src="./climate_plots/rainfall_plots/WEST UTTAR PRADESH_annual_rainfall.png"
+                                alt="WEST UTTAR PRADESH annual Rainfall" class="chart-image" style="display: none;">
+                        </div>
+                    </div>
+
+                    <div id="rainfall-events" class="tab-content">
+
+                        <div class="events-container">
+                            <!-- Row 1: Two graphs with dropdown -->
+                            <div class="chart-container">
+                                <h3>Top 5 Extreme Rainfall Years</h3>
+                                <table class="landslide-major">
+                                    <tr id="table-heading">
+                                        <th>Year</th>
+                                        <th>Annual Rainfall (mm)</th>
+                                    </tr>
+                                    <tr>
+                                        <td>1948</td>
+                                        <td>6331.1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1938</td>
+                                        <td>6129.0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1921</td>
+                                        <td>5691.4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1961</td>
+                                        <td>5553.9</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1918</td>
+                                        <td>5486.3</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                </div>
+                 <!-- temp here -->
+                <div id="temperature-content" style="display: none;">
+                    <div id="temperature-overview" class="tab-content">
+                        <div id="dashboard-section">
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-title">Time Period Covered</div>
+                                    <div class="stat-value">1901 to 2020</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">Geographic Coverage</div>
+                                    <div class="stat-value">34 Regions</div>
+                                    <div class="stat-subtitle">Andhra Pradesh, Arunachal Pradesh, Assam, Bihar, etc.</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">Total Data Points</div>
+                                    <div class="stat-value">70,516</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">Overall Avg. Temperature</div>
+                                    <div class="stat-value">23.19°C</div>
+                                    <div class="stat-subtitle">1901-2020</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">Min. Temperature Recorded</div>
+                                    <div class="stat-value">-5.64°C</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">Max. Temperature Recorded</div>
+                                    <div class="stat-value">35.55°C</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">Temperature Trend</div>
+                                    <div class="stat-value">Increasing</div>
+                                </div>
+                            </div>
+                            
+                        </div>
+
+                        
+                    </div>
+
+                    <div id="temperature-magnitude" class="tab-content">
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('TripuraMonthly')">Tripura Monthly
+                                Temperature Trends</h3>
+                            <img id="TripuraMonthly"
+                                src="./climate_plots/temp_plots/Tripura_monthly_temperature_trends.png"
+                                alt="Tripura Monthly Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('AndhraMonthly')">Andhra Pradesh Monthly
+                                Temperature Trends</h3>
+                            <img id="AndhraMonthly"
+                                src="./climate_plots/temp_plots/Andhra Pradesh_monthly_temperature_trends.png"
+                                alt="Andhra Monthly Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('ArunaMonthly')">Arunachal Pradesh Monthly
+                                Temperature Trends</h3>
+                            <img id="ArunaMonthly"
+                                src="./climate_plots/temp_plots/Arunachal Pradesh_monthly_temperature_trends.png"
+                                alt="Arunachal Pradesh Monthly Temperature Trends" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('AssamMonthly')">Assam Monthly Temperature
+                                Trends</h3>
+                            <img id="AssamMonthly" src="./climate_plots/temp_plots/Assam_monthly_temperature_trends.png"
+                                alt="Assam Monthly Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('BiharMonthly')">Bihar Monthly Temperature
+                                Trends</h3>
+                            <img id="BiharMonthly" src="./climate_plots/temp_plots/Bihar_monthly_temperature_trends.png"
+                                alt="Bihar Monthly Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('ChandigarhMonthly')">Chandigarh Monthly
+                                Temperature Trends</h3>
+                            <img id="ChandigarhMonthly"
+                                src="./climate_plots/temp_plots/Chandigarh_monthly_temperature_trends.png"
+                                alt="Chandigarh Monthly Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('ChhattisgarhMonthly')">Chhattisgarh
+                                Monthly Temperature Trends</h3>
+                            <img id="ChhattisgarhMonthly"
+                                src="./climate_plots/temp_plots/Chhattisgarh_monthly_temperature_trends.png"
+                                alt="Chhattisgarh Monthly Temperature Trends" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Dadra and Nagar HaveliMonthly')">Dadra
+                                and Nagar Haveli Monthly Temperature Trends</h3>
+                            <img id="Dadra and Nagar HaveliMonthly"
+                                src="./climate_plots/temp_plots/Dadra and Nagar Haveli_monthly_temperature_trends.png"
+                                alt="Dadra and Nagar Haveli Monthly Temperature Trends" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Daman and DiuMonthly')">Daman and Diu
+                                Monthly Temperature Trends</h3>
+                            <img id="Daman and DiuMonthly"
+                                src="./climate_plots/temp_plots/Daman and Diu_monthly_temperature_trends.png"
+                                alt="Daman and Diu Monthly Temperature Trends" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('DelhiMonthly')">Delhi Monthly Temperature
+                                Trends</h3>
+                            <img id="DelhiMonthly" src="./climate_plots/temp_plots/Delhi_monthly_temperature_trends.png"
+                                alt="Delhi Monthly Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('GoaMonthly')">Goa Monthly Temperature
+                                Trends</h3>
+                            <img id="GoaMonthly" src="./climate_plots/temp_plots/Goa_monthly_temperature_trends.png"
+                                alt="Goa Monthly Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('GujaratMonthly')">Gujarat Monthly
+                                Temperature Trends</h3>
+                            <img id="GujaratMonthly"
+                                src="./climate_plots/temp_plots/Gujarat_monthly_temperature_trends.png"
+                                alt="Gujarat Monthly Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('HaryanaMonthly')">Haryana Monthly
+                                Temperature Trends</h3>
+                            <img id="HaryanaMonthly"
+                                src="./climate_plots/temp_plots/Haryana_monthly_temperature_trends.png"
+                                alt="Haryana Monthly Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Himachal PradeshMonthly')">Himachal
+                                Pradesh Monthly Temperature Trends</h3>
+                            <img id="Himachal PradeshMonthly"
+                                src="./climate_plots/temp_plots/Himachal Pradesh_monthly_temperature_trends.png"
+                                alt="Himachal Pradesh Monthly Temperature Trends" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('JharkhandMonthly')">Jharkhand Monthly
+                                Temperature Trends</h3>
+                            <img id="JharkhandMonthly"
+                                src="./climate_plots/temp_plots/Jharkhand_monthly_temperature_trends.png"
+                                alt="Jharkhand Monthly Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('KarnatakaMonthly')">Karnataka Monthly
+                                Temperature Trends</h3>
+                            <img id="KarnatakaMonthly"
+                                src="./climate_plots/temp_plots/Karnataka_monthly_temperature_trends.png"
+                                alt="Karnataka Monthly Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('KeralaMonthly')">Kerala Monthly
+                                Temperature Trends</h3>
+                            <img id="KeralaMonthly"
+                                src="./climate_plots/temp_plots/Kerala_monthly_temperature_trends.png"
+                                alt="Kerala Monthly Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('LakshadweepMonthly')">Lakshadweep Monthly
+                                Temperature Trends</h3>
+                            <img id="LakshadweepMonthly"
+                                src="./climate_plots/temp_plots/Lakshadweep_monthly_temperature_trends.png"
+                                alt="Lakshadweep Monthly Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Madhya PradeshMonthly')">Madhya Pradesh
+                                Monthly Temperature Trends</h3>
+                            <img id="Madhya PradeshMonthly"
+                                src="./climate_plots/temp_plots/Madhya Pradesh_monthly_temperature_trends.png"
+                                alt="Madhya Pradesh Monthly Temperature Trends" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('MaharashtraMonthly')">Maharashtra Monthly
+                                Temperature Trends</h3>
+                            <img id="MaharashtraMonthly"
+                                src="./climate_plots/temp_plots/Maharashtra_monthly_temperature_trends.png"
+                                alt="Maharashtra Monthly Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('RajasthanMonthly')">Rajasthan Monthly
+                                Temperature Trends</h3>
+                            <img id="RajasthanMonthly"
+                                src="./climate_plots/temp_plots/Rajasthan_monthly_temperature_trends.png"
+                                alt="Rajasthan Monthly Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('SikkimMonthly')">Sikkim Monthly
+                                Temperature Trends</h3>
+                            <img id="SikkimMonthly"
+                                src="./climate_plots/temp_plots/Sikkim_monthly_temperature_trends.png"
+                                alt="Sikkim Monthly Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Tamil NaduMonthly')">Tamil Nadu Monthly
+                                Temperature Trends</h3>
+                            <img id="Tamil NaduMonthly"
+                                src="./climate_plots/temp_plots/Tamil Nadu_monthly_temperature_trends.png"
+                                alt="Tamil Nadu Monthly Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('UttarakhandMonthly')">Uttarakhand Monthly
+                                Temperature Trends</h3>
+                            <img id="UttarakhandMonthly"
+                                src="./climate_plots/temp_plots/Uttarakhand_monthly_temperature_trends.png"
+                                alt="Uttarakhand Monthly Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('UttarPradeshMonthly')">Uttar Pradesh
+                                Monthly Temperature Trends</h3>
+                            <img id="UttarPradeshMonthly"
+                                src="./climate_plots/temp_plots/Uttar Pradesh_monthly_temperature_trends.png"
+                                alt="Uttar Pradesh Monthly Temperature Trends" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('WestBengalMonthly')">West Bengal Monthly
+                                Temperature Trends</h3>
+                            <img id="WestBengalMonthly"
+                                src="./climate_plots/temp_plots/West Bengal_monthly_temperature_trends.png"
+                                alt="West Bengal Monthly Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('ManipurMonthly')">Manipur Monthly
+                                Temperature Trends</h3>
+                            <img id="ManipurMonthly"
+                                src="./climate_plots/temp_plots/Manipur_monthly_temperature_trends.png"
+                                alt="Manipur Monthly Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('MeghalayaMonthly')">Meghalaya Monthly
+                                Temperature Trends</h3>
+                            <img id="MeghalayaMonthly"
+                                src="./climate_plots/temp_plots/Meghalaya_monthly_temperature_trends.png"
+                                alt="Meghalaya Monthly Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('MizoramMonthly')">Mizoram Monthly
+                                Temperature Trends</h3>
+                            <img id="MizoramMonthly"
+                                src="./climate_plots/temp_plots/Mizoram_monthly_temperature_trends.png"
+                                alt="Mizoram Monthly Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('NagalandMonthly')">Nagaland Monthly
+                                Temperature Trends</h3>
+                            <img id="NagalandMonthly"
+                                src="./climate_plots/temp_plots/Nagaland_monthly_temperature_trends.png"
+                                alt="Nagaland Monthly Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('OrissaMonthly')">Orissa Monthly
+                                Temperature Trends</h3>
+                            <img id="OrissaMonthly"
+                                src="./climate_plots/temp_plots/Orissa_monthly_temperature_trends.png"
+                                alt="Orissa Monthly Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('PuducherryMonthly')">Puducherry Monthly
+                                Temperature Trends</h3>
+                            <img id="PuducherryMonthly"
+                                src="./climate_plots/temp_plots/Puducherry_monthly_temperature_trends.png"
+                                alt="Puducherry Monthly Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('PunjabMonthly')">Punjab Monthly
+                                Temperature Trends</h3>
+                            <img id="PunjabMonthly"
+                                src="./climate_plots/temp_plots/Punjab_monthly_temperature_trends.png"
+                                alt="Punjab Monthly Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+                    </div>
+
+                    <div id="temperature-trends" class="tab-content" style="display: none;">
+                        <!-- Tripura -->
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('TripuraAnnual')">Tripura Annual
+                                Temperature Trend</h3>
+                            <img id="TripuraAnnual"
+                                src="./climate_plots/temp_plots/Tripura_annual_temperature_trend.png"
+                                alt="Tripura Annual Temperature Trend" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('AndhraAnnual')">Andhra Pradesh Annual
+                                Temperature Trends</h3>
+                            <img id="AndhraAnnual"
+                                src="./climate_plots/temp_plots/Andhra Pradesh_annual_temperature_trend.png"
+                                alt="Andhra annual Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('ArunaAnnual')">Arunachal Pradesh Annual
+                                Temperature Trends</h3>
+                            <img id="ArunaAnnual"
+                                src="./climate_plots/temp_plots/Arunachal Pradesh_annual_temperature_trend.png"
+                                alt="Arunachal Pradesh annual Temperature Trends" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Assamannual')">Assam Annual Temperature
+                                Trends</h3>
+                            <img id="Assamannual" src="./climate_plots/temp_plots/Assam_annual_temperature_trend.png"
+                                alt="Assam annual Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Biharannual')">Bihar Annual Temperature
+                                Trends</h3>
+                            <img id="Biharannual" src="./climate_plots/temp_plots/Bihar_annual_temperature_trend.png"
+                                alt="Bihar annual Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Chandigarhannual')">Chandigarh Annual
+                                Temperature Trends</h3>
+                            <img id="Chandigarhannual"
+                                src="./climate_plots/temp_plots/Chandigarh_annual_temperature_trend.png"
+                                alt="Chandigarh annual Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Chhattisgarhannual')">Chhattisgarh Annual
+                                Temperature Trends</h3>
+                            <img id="Chhattisgarhannual"
+                                src="./climate_plots/temp_plots/Chhattisgarh_annual_temperature_trend.png"
+                                alt="Chhattisgarh annual Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Dadra and Nagar Haveliannual')">Dadra and
+                                Nagar Haveli Annual Temperature Trends</h3>
+                            <img id="Dadra and Nagar Haveliannual"
+                                src="./climate_plots/temp_plots/Dadra and Nagar Haveli_annual_temperature_trend.png"
+                                alt="Dadra and Nagar Haveli annual Temperature Trends" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Daman and Diuannual')">Daman and Diu
+                                Annual Temperature Trends</h3>
+                            <img id="Daman and Diuannual"
+                                src="./climate_plots/temp_plots/Daman and Diu_annual_temperature_trend.png"
+                                alt="Daman and Diu annual Temperature Trends" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Delhiannual')">Delhi Annual Temperature
+                                Trends</h3>
+                            <img id="Delhiannual" src="./climate_plots/temp_plots/Delhi_annual_temperature_trend.png"
+                                alt="Delhi annual Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Goaannual')">Goa Annual Temperature
+                                Trends</h3>
+                            <img id="Goaannual" src="./climate_plots/temp_plots/Goa_annual_temperature_trend.png"
+                                alt="Goa annual Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Gujaratannual')">Gujarat Annual
+                                Temperature Trends</h3>
+                            <img id="Gujaratannual"
+                                src="./climate_plots/temp_plots/Gujarat_annual_temperature_trend.png"
+                                alt="Gujarat annual Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Haryanaannual')">Haryana Annual
+                                Temperature Trends</h3>
+                            <img id="Haryanaannual"
+                                src="./climate_plots/temp_plots/Haryana_annual_temperature_trend.png"
+                                alt="Haryana annual Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Himachal Pradeshannual')">Himachal
+                                Pradesh Annual Temperature Trends</h3>
+                            <img id="Himachal Pradeshannual"
+                                src="./climate_plots/temp_plots/Himachal Pradesh_annual_temperature_trend.png"
+                                alt="Himachal Pradesh annual Temperature Trends" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Jharkhandannual')">Jharkhand Annual
+                                Temperature Trends</h3>
+                            <img id="Jharkhandannual"
+                                src="./climate_plots/temp_plots/Jharkhand_annual_temperature_trend.png"
+                                alt="Jharkhand annual Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Karnatakaannual')">Karnataka Annual
+                                Temperature Trends</h3>
+                            <img id="Karnatakaannual"
+                                src="./climate_plots/temp_plots/Karnataka_annual_temperature_trend.png"
+                                alt="Karnataka annual Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Keralaannual')">Kerala Annual Temperature
+                                Trends</h3>
+                            <img id="Keralaannual" src="./climate_plots/temp_plots/Kerala_annual_temperature_trend.png"
+                                alt="Kerala annual Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Lakshadweepannual')">Lakshadweep Annual
+                                Temperature Trends</h3>
+                            <img id="Lakshadweepannual"
+                                src="./climate_plots/temp_plots/Lakshadweep_annual_temperature_trend.png"
+                                alt="Lakshadweep annual Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Madhya Pradeshannual')">Madhya Pradesh
+                                Annual Temperature Trends</h3>
+                            <img id="Madhya Pradeshannual"
+                                src="./climate_plots/temp_plots/Madhya Pradesh_annual_temperature_trend.png"
+                                alt="Madhya Pradesh annual Temperature Trends" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Maharashtraannual')">Maharashtra Annual
+                                Temperature Trends</h3>
+                            <img id="Maharashtraannual"
+                                src="./climate_plots/temp_plots/Maharashtra_annual_temperature_trend.png"
+                                alt="Maharashtra annual Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Rajasthanannual')">Rajasthan Annual
+                                Temperature Trends</h3>
+                            <img id="Rajasthanannual"
+                                src="./climate_plots/temp_plots/Rajasthan_annual_temperature_trend.png"
+                                alt="Rajasthan annual Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Sikkimannual')">Sikkim Annual Temperature
+                                Trends</h3>
+                            <img id="Sikkimannual" src="./climate_plots/temp_plots/Sikkim_annual_temperature_trend.png"
+                                alt="Sikkim annual Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('Tamil Naduannual')">Tamil Nadu Annual
+                                Temperature Trends</h3>
+                            <img id="Tamil Naduannual"
+                                src="./climate_plots/temp_plots/Tamil Nadu_annual_temperature_trend.png"
+                                alt="Tamil Nadu annual Temperature Trends" class="chart-image" style="display: none;">
+                        </div>
+
+                        <!-- Uttarakhand -->
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('UttarakhandAnnual')">Uttarakhand Annual
+                                Temperature Trend</h3>
+                            <img id="UttarakhandAnnual"
+                                src="./climate_plots/temp_plots/Uttarakhand_annual_temperature_trend.png"
+                                alt="Uttarakhand Annual Temperature Trend" class="chart-image" style="display: none;">
+                        </div>
+
+
+                        <!-- Uttar Pradesh -->
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('UttarPradeshAnnual')">Uttar Pradesh
+                                Annual Temperature Trend</h3>
+                            <img id="UttarPradeshAnnual"
+                                src="./climate_plots/temp_plots/Uttar Pradesh_annual_temperature_trend.png"
+                                alt="Uttar Pradesh Annual Temperature Trend" class="chart-image" style="display: none;">
+                        </div>
+
+
+                        <!-- West Bengal -->
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('WestBengalAnnual')">West Bengal Annual
+                                Temperature Trend</h3>
+                            <img id="WestBengalAnnual"
+                                src="./climate_plots/temp_plots/West Bengal_annual_temperature_trend.png"
+                                alt="West Bengal Annual Temperature Trend" class="chart-image" style="display: none;">
+                        </div>
+
+
+                        <!-- Manipur -->
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('ManipurAnnual')">Manipur Annual
+                                Temperature Trend</h3>
+                            <img id="ManipurAnnual"
+                                src="./climate_plots/temp_plots/Manipur_annual_temperature_trend.png"
+                                alt="Manipur Annual Temperature Trend" class="chart-image" style="display: none;">
+                        </div>
+
+
+                        <!-- Meghalaya -->
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('MeghalayaAnnual')">Meghalaya Annual
+                                Temperature Trend</h3>
+                            <img id="MeghalayaAnnual"
+                                src="./climate_plots/temp_plots/Meghalaya_annual_temperature_trend.png"
+                                alt="Meghalaya Annual Temperature Trend" class="chart-image" style="display: none;">
+                        </div>
+
+
+                        <!-- Mizoram -->
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('MizoramAnnual')">Mizoram Annual
+                                Temperature Trend</h3>
+                            <img id="MizoramAnnual"
+                                src="./climate_plots/temp_plots/Mizoram_annual_temperature_trend.png"
+                                alt="Mizoram Annual Temperature Trend" class="chart-image" style="display: none;">
+                        </div>
+
+
+                        <!-- Nagaland -->
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('NagalandAnnual')">Nagaland Annual
+                                Temperature Trend</h3>
+                            <img id="NagalandAnnual"
+                                src="./climate_plots/temp_plots/Nagaland_annual_temperature_trend.png"
+                                alt="Nagaland Annual Temperature Trend" class="chart-image" style="display: none;">
+                        </div>
+
+
+                        <!-- Orissa -->
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('OrissaAnnual')">Orissa Annual Temperature
+                                Trend</h3>
+                            <img id="OrissaAnnual" src="./climate_plots/temp_plots/Orissa_annual_temperature_trend.png"
+                                alt="Orissa Annual Temperature Trend" class="chart-image" style="display: none;">
+                        </div>
+
+
+                        <!-- Puducherry -->
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('PuducherryAnnual')">Puducherry Annual
+                                Temperature Trend</h3>
+                            <img id="PuducherryAnnual"
+                                src="./climate_plots/temp_plots/Puducherry_annual_temperature_trend.png"
+                                alt="Puducherry Annual Temperature Trend" class="chart-image" style="display: none;">
+                        </div>
+
+
+                        <!-- Punjab -->
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('PunjabAnnual')">Punjab Annual Temperature
+                                Trend</h3>
+                            <img id="PunjabAnnual" src="./climate_plots/temp_plots/Punjab_annual_temperature_trend.png"
+                                alt="Punjab Annual Temperature Trend" class="chart-image" style="display: none;">
+                        </div>
+                    </div>
+
+                    <div id="temperature-events" class="tab-content">
+
+                        <div class="events-container">
+                            <!-- Row 1: Two graphs with dropdown -->
+                            <div class="chart-container">
+                                <h3>Top 5 Hottest Years</h3>
+                                <table class="landslide-major">
+                                    <tr id="table-heading">
+                                        <th>State</th>
+                                        <th>Period</th>
+                                        <th>Average Temperature (°C)</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Punjab</td>
+                                        <td>Jun</td>
+                                        <td>33.73</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Haryana</td>
+                                        <td>Jun</td>
+                                        <td>33.67</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Delhi</td>
+                                        <td>Jun</td>
+                                        <td>33.66</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Madhya Pradesh</td>
+                                        <td>May</td>
+                                        <td>33.60</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Rajasthan</td>
+                                        <td>Jun</td>
+                                        <td>33.57</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            
+                            <div class="chart-container">
+                                <h3>Top 5 Coldest Years</h3>
+                                <table class="landslide-major">
+                                    <tr id="table-heading">
+                                        <th>State</th>
+                                        <th>Period</th>
+                                        <th>Average Temperature (°C)</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sikkim</td>
+                                        <td>Jan</td>
+                                        <td>-3.90</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sikkim</td>
+                                        <td>Winter</td>
+                                        <td>-3.33</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sikkim</td>
+                                        <td>Feb</td>
+                                        <td>-2.75</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sikkim</td>
+                                        <td>Dec</td>
+                                        <td>-2.13</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Himachal Pradesh</td>
+                                        <td>Jan</td>
+                                        <td>-0.25</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="floods-content" style="display: none;">
+                    <div id="floods-overview" class="tab-content">
+                        <div id="dashboard-section">
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-title">Flood Damage</div>
+                                    <div class="stat-value">4745 crore </div>
+                                    <div class="stat-subtitle">last 10 years period from 1996 to 2005 was </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">Flood affected area in total</div>
+                                    <div class="stat-value">40</div>
+                                    <div class="stat-subtitle">million hectares</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-title">Flood Affected area anually</div>
+                                    <div class="stat-value">18.6</div>
+                                    <div class="stat-subtitle">million hectares</div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="flood-introduction">
+                            <h3>Introduction to Floods in India</h3>
+                            <p>Floods in India are periodic and disastrous, every year many parts of the country get
+                                affected by Floods. According to the National Disaster Management Authority (NDMA), over
+                                40 Mha ha of land in India is prone to flooding. The Ministry of Jal Shakti (MoJS)
+                                reported that the recent estimate on flood prone area in the country is 49.15 Mha, out
+                                of which Assam, Bihar, Odisha, Uttar Pradesh and West Bengal are largely affected. These
+                                floods have a severe impact on life, property, and infrastructure, to prevent and
+                                decrease the effects of Floods, it requires a combined effect from the government
+                                organizations, civil society, and individuals. The Indian government has taken measures
+                                to improve disaster management, early warning systems, and flood control infrastructure
+                                that include the construction of dams, embankments, and other flood control structures
+                                specifically to mitigate the impact of floods through different State & Central disaster
+                                management support organizations.</p>
+                            <br>
+                            <div style="text-align: center;">
+                                <h3>Areas Affected By Floods in India</h3>
+                                <img src="./Floods_plots/Areas_affected_by_floods.png"
+                                    alt="Areas affected by floods in India">
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div id="floods-magnitude" class="tab-content">
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('pieChart50')">Floods per state Analysis
+                            </h3>
+                            <img id="pieChart50" src="./Floods_plots/Floods_per_state.png" alt="Floods per state"
+                                class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('barChart51')">Flood duration per state
+                                analysis</h3>
+                            <img id="barChart51" src="./Floods_plots/Duration_per_State.png"
+                                alt="Flood duration per state analysis" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('lineChart52')">Fatality per state due to
+                                Floods</h3>
+                            <img id="lineChart52" src="./Floods_plots/Fatality_per_state.png"
+                                alt="Fatality per state due to Floods" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('scatterPlot53')">Number of Floods for
+                                each cause analysis</h3>
+                            <img id="scatterPlot53" src="./Floods_plots/Number_vs_causes.png"
+                                alt="Number of Floods for each cause analysis" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('bargraph54')">Fatality and Flood duration
+                                relation analysis</h3>
+                            <img id="bargraph54" src="./Floods_plots/Fatality_vs_duration.png"
+                                alt="Fatality and Flood duration relation analysis" class="chart-image"
+                                style="display: none;">
+                        </div>
+                    </div>
+
+                    <div id="floods-trends" class="tab-content" style="display: none;">
+                        <div class="state-chart">
+                            <h4 class="dropdown-heading" onclick="toggleChart('UttarPradesh')">Uttar Pradesh Floods</h4>
+                            <img id="UttarPradesh" src="Floods_plots/UttarPradesh_flood_analysis.png"
+                                alt="Uttar Pradesh Flood Events" class="chart-image" style="display: none;" />
+                        </div>
+                        <div class="state-chart">
+                            <h4 class="dropdown-heading" onclick="toggleChart('WestBengal')">West Bengal Floods</h4>
+                            <img id="WestBengal" src="Floods_plots/WestBengal_flood_analysis.png"
+                                alt="West Bengal Flood Events" class="chart-image" style="display: none;" />
+                        </div>
+
+                        <!-- Row 2: Two graphs with dropdown -->
+                        <div class="state-chart">
+                            <h4 class="dropdown-heading" onclick="toggleChart('Assam')">Assam Floods</h4>
+                            <img id="Assam" src="Floods_plots/Assam_flood_analysis.png" alt="Assam Flood Events"
+                                class="chart-image" style="display: none;" />
+                        </div>
+                        <div class="state-chart">
+                            <h4 class="dropdown-heading" onclick="toggleChart('Ap')">Andhra Pradesh Floods</h4>
+                            <img id="Ap" src="Floods_plots/Ap_floods.png" alt="Andhra Pradesh Flood Events"
+                                class="chart-image" style="display: none;" />
+                        </div>
+
+                        <!-- Row 3: Two graphs with dropdown -->
+                        <div class="state-chart">
+                            <h4 class="dropdown-heading" onclick="toggleChart('Bihar')">Bihar Floods</h4>
+                            <img id="Bihar" src="Floods_plots/Bihar_flood_analysis.png" alt="Bihar Flood Events"
+                                class="chart-image" style="display: none;" />
+                        </div>
+                        <div class="state-chart">
+                            <h4 class="dropdown-heading" onclick="toggleChart('Gujarat')">Gujarat Floods</h4>
+                            <img id="Gujarat" src="Floods_plots/Gujarat_flood_analysis.png" alt="Gujarat Flood Events"
+                                class="chart-image" style="display: none;" />
+                        </div>
+
+                        <!-- Row 4: Two graphs with dropdown -->
+                        <div class="state-chart">
+                            <h4 class="dropdown-heading" onclick="toggleChart('Karnataka')">Karnataka Floods</h4>
+                            <img id="Karnataka" src="Floods_plots/Karnataka_flood_analysis.png"
+                                alt="Karnataka Flood Events" class="chart-image" style="display: none;" />
+                        </div>
+                        <div class="state-chart">
+                            <h4 class="dropdown-heading" onclick="toggleChart('Kerala')">Kerala Floods</h4>
+                            <img id="Kerala" src="Floods_plots/Kerala_flood_analysis.png" alt="Kerala Flood Events"
+                                class="chart-image" style="display: none;" />
+                        </div>
+
+                        <!-- Row 5: Two graphs with dropdown -->
+                        <div class="state-chart">
+                            <h4 class="dropdown-heading" onclick="toggleChart('Maharashtra')">Maharashtra Floods</h4>
+                            <img id="Maharashtra" src="Floods_plots/Maharashtra_flood_analysis.png"
+                                alt="Maharashtra Flood Events" class="chart-image" style="display: none;" />
+                        </div>
+                        <div class="state-chart">
+                            <h4 class="dropdown-heading" onclick="toggleChart('TamilNadu')">Tamil Nadu Floods</h4>
+                            <img id="TamilNadu" src="Floods_plots/TamilNadu_flood_analysis.png"
+                                alt="Tamil Nadu Flood Events" class="chart-image" style="display: none;" />
+                        </div>
+
+                        <!-- Row 6: One graph with dropdown -->
+                        <div class="state-chart">
+                            <h4 class="dropdown-heading" onclick="toggleChart('Telangana')">Telangana Floods</h4>
+                            <img id="Telangana" src="Floods_plots/Telangana_flood_analysis.png"
+                                alt="Telangana Flood Events" class="chart-image" style="display: none;" />
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <!-- Major Events Tab for Floods -->
+                <!-- Major Events Tab for Floods -->
+                <div id="floods-events" class="tab-content">
+
+                    <div class="events-container">
+                        <!-- Row 1: Two graphs with dropdown -->
+                        <div class="chart-container">
+                            <h3>Flood Events and Fatalities by Year</h3>
+                            <div class="trends-table-container">
+                                <table class="trends-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Year</th>
+                                            <th>Uttar Pradesh (Floods)</th>
+                                            <th>Uttar Pradesh (Fatalities)</th>
+                                            <th>West Bengal (Floods)</th>
+                                            <th>West Bengal (Fatalities)</th>
+                                            <th>Assam (Floods)</th>
+                                            <th>Assam (Fatalities)</th>
+                                            <th>Bihar (Floods)</th>
+                                            <th>Bihar (Fatalities)</th>
+                                            <th>Kerala (Floods)</th>
+                                            <th>Kerala (Fatalities)</th>
+                                            <th>Others (Floods)</th>
+                                            <th>Others (Fatalities)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1998-2006</td>
+                                            <td>1,245</td>
+                                            <td>32,450</td>
+                                            <td>1,000</td>
+                                            <td>25,000</td>
+                                            <td>900</td>
+                                            <td>20,000</td>
+                                            <td>850</td>
+                                            <td>22,000</td>
+                                            <td>950</td>
+                                            <td>18,000</td>
+                                            <td>800</td>
+                                            <td>16,000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2006-2010</td>
+                                            <td>1,100</td>
+                                            <td>25,500</td>
+                                            <td>950</td>
+                                            <td>22,000</td>
+                                            <td>880</td>
+                                            <td>19,000</td>
+                                            <td>920</td>
+                                            <td>20,500</td>
+                                            <td>800</td>
+                                            <td>15,000</td>
+                                            <td>760</td>
+                                            <td>14,500</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2011-2015</td>
+                                            <td>1,300</td>
+                                            <td>28,000</td>
+                                            <td>1,050</td>
+                                            <td>23,000</td>
+                                            <td>1,050</td>
+                                            <td>21,000</td>
+                                            <td>1,100</td>
+                                            <td>24,500</td>
+                                            <td>950</td>
+                                            <td>17,000</td>
+                                            <td>870</td>
+                                            <td>16,500</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2016-2020</td>
+                                            <td>1,200</td>
+                                            <td>26,500</td>
+                                            <td>1,100</td>
+                                            <td>21,000</td>
+                                            <td>1,100</td>
+                                            <td>22,000</td>
+                                            <td>1,200</td>
+                                            <td>27,000</td>
+                                            <td>1,000</td>
+                                            <td>19,500</td>
+                                            <td>900</td>
+                                            <td>18,000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2021-2022</td>
+                                            <td>1,350</td>
+                                            <td>29,500</td>
+                                            <td>1,250</td>
+                                            <td>24,500</td>
+                                            <td>1,100</td>
+                                            <td>23,000</td>
+                                            <td>1,300</td>
+                                            <td>28,000</td>
+                                            <td>1,200</td>
+                                            <td>22,000</td>
+                                            <td>1,100</td>
+                                            <td>21,500</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div id="cyclones-content" style="display: none;">
+                    <div id="cyclones-overview" class="tab-content">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-title">Total Cyclones</div>
+                                <div class="stat-value">420</div>
+                                <div class="stat-subtitle">1891-2024</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-title">Severe Cyclones</div>
+                                <div class="stat-value">132</div>
+                                <div class="stat-subtitle">1891-2024</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-title">Average Wind Speed</div>
+                                <div class="stat-value">110 km/h</div>
+                                <div class="stat-subtitle">Based on Historical Data</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-title">Average Precipitation</div>
+                                <div class="stat-value">60 cm</div>
+                                <div class="stat-subtitle">Maximum in a Single Day</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-title">Average Storm Surge</div>
+                                <div class="stat-value">4.5 m</div>
+                                <div class="stat-subtitle">During Severe Cyclones</div>
+                            </div>
+                        </div>
+                        <div class="dashboard-section">
+                            <h3>Cyclone Impact in India</h3>
+                            <p>
+                                The Indian subcontinent is one of the most cyclone-affected regions globally,
+                                particularly along the East coast. The majority of cyclones form in the Bay of Bengal,
+                                with about 70% making landfall on the East coast, affecting states like Andhra Pradesh,
+                                Odisha, Tamil Nadu, and West Bengal. The region experiences an average of 5 to 6
+                                cyclones per year, with 2 to 3 classified as severe.
+                            </p>
+
+                            <h3>Highly Affected Districts</h3>
+                            <table class="cyclone-table">
+                                <tr>
+                                    <th>State</th>
+                                    <th>District</th>
+                                    <th>Category of Proneness</th>
+                                </tr>
+                                <!-- Andhra Pradesh -->
+                                <tr>
+                                    <td>Andhra Pradesh</td>
+                                    <td>Nellore</td>
+                                    <td>Very High (P1)</td>
+                                </tr>
+                                <tr>
+                                    <td>Andhra Pradesh</td>
+                                    <td>East Godavari</td>
+                                    <td>Very High (P1)</td>
+                                </tr>
+                                <tr>
+                                    <td>Andhra Pradesh</td>
+                                    <td>Srikakulam</td>
+                                    <td>Very High (P1)</td>
+                                </tr>
+                                <tr>
+                                    <td>Andhra Pradesh</td>
+                                    <td>Guntur</td>
+                                    <td>Very High (P1)</td>
+                                </tr>
+                                <tr>
+                                    <td>Andhra Pradesh</td>
+                                    <td>Visakhapatnam</td>
+                                    <td>High (P2)</td>
+                                </tr>
+                                <tr>
+                                    <td>Andhra Pradesh</td>
+                                    <td>Krishna</td>
+                                    <td>High (P2)</td>
+                                </tr>
+                                <tr>
+                                    <td>Andhra Pradesh</td>
+                                    <td>West Godavari</td>
+                                    <td>High (P2)</td>
+                                </tr>
+                                <!-- Odisha -->
+                                <tr>
+                                    <td>Odisha</td>
+                                    <td>Balasore</td>
+                                    <td>Very High (P1)</td>
+                                </tr>
+                                <tr>
+                                    <td>Odisha</td>
+                                    <td>Kendrapara</td>
+                                    <td>Very High (P1)</td>
+                                </tr>
+                                <tr>
+                                    <td>Odisha</td>
+                                    <td>Jagatsinghpur</td>
+                                    <td>Very High (P1)</td>
+                                </tr>
+                                <tr>
+                                    <td>Odisha</td>
+                                    <td>Ganjam</td>
+                                    <td>High (P2)</td>
+                                </tr>
+                                <tr>
+                                    <td>Odisha</td>
+                                    <td>Puri</td>
+                                    <td>High (P2)</td>
+                                </tr>
+                                <!-- Tamil Nadu -->
+                                <tr>
+                                    <td>Tamil Nadu</td>
+                                    <td>Kanchipuram</td>
+                                    <td>Very High (P1)</td>
+                                </tr>
+                                <tr>
+                                    <td>Tamil Nadu</td>
+                                    <td>Cuddalore</td>
+                                    <td>Very High (P1)</td>
+                                </tr>
+                                <tr>
+                                    <td>Tamil Nadu</td>
+                                    <td>Nagapattinam</td>
+                                    <td>High (P2)</td>
+                                </tr>
+                                <tr>
+                                    <td>Tamil Nadu</td>
+                                    <td>Chennai</td>
+                                    <td>High (P2)</td>
+                                </tr>
+                                <!-- West Bengal -->
+                                <tr>
+                                    <td>West Bengal</td>
+                                    <td>South 24 Parganas</td>
+                                    <td>Very High (P1)</td>
+                                </tr>
+                                <tr>
+                                    <td>West Bengal</td>
+                                    <td>Midnapore</td>
+                                    <td>Very High (P1)</td>
+                                </tr>
+                                <tr>
+                                    <td>West Bengal</td>
+                                    <td>North 24 Parganas</td>
+                                    <td>Very High (P1)</td>
+                                </tr>
+                                <tr>
+                                    <td>West Bengal</td>
+                                    <td>Kolkata</td>
+                                    <td>High (P2)</td>
+                                </tr>
+                                <!-- Gujarat -->
+                                <tr>
+                                    <td>Gujarat</td>
+                                    <td>Kachchh</td>
+                                    <td>High (P2)</td>
+                                </tr>
+                                <tr>
+                                    <td>Gujarat</td>
+                                    <td>Junagadh</td>
+                                    <td>High (P2)</td>
+                                </tr>
+                                <tr>
+                                    <td>Gujarat</td>
+                                    <td>Bhavnagar</td>
+                                    <td>Moderate (P3)</td>
+                                </tr>
+                                <tr>
+                                    <td>Gujarat</td>
+                                    <td>Porbandar</td>
+                                    <td>Moderate (P3)</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+
+                    <div id="cyclones-magnitude" class="tab-content" style="display: none;">
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('pieChart')">Cyclone Category Distribution
+                                Analysis</h3>
+                            <img id="pieChart" src="./cyclone_plots/pie_chart_image.png"
+                                alt="Cyclone Category Distribution" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('barChart')">Total and Severe Cyclones
+                                Analysis by District</h3>
+                            <img id="barChart" src="./cyclone_plots/bar_chart_image.png" alt="Total and Severe Cyclones"
+                                class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('lineChart')">Wind Speed Analysis by
+                                District</h3>
+                            <img id="lineChart" src="./cyclone_plots/line_chart_image.png" alt="Wind Speed Variation"
+                                class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('scatterPlot')">Scatter Plot Analysis of
+                                Total Cyclones vs. Mean Rating</h3>
+                            <img id="scatterPlot" src="./cyclone_plots/scatter_plot_image.png"
+                                alt="Scatter Plot of Cyclones" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('bargraph')">Cyclone Frequency Analysis of
+                                East Coast Districts </h3>
+                            <img id="bargraph" src="./cyclone_plots/eastcoast.png" alt="Bar Graph of Cyclones"
+                                class="chart-image" style="display: none;">
+                        </div>
+
+
+                    </div>
+
+                    <div id="cyclones-trends" class="tab-content" style="display: none;">
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('dotplot')">Dot Plot of Cyclone Parameters
+                                of P1 Districts</h3>
+                            <img id="dotplot" src="./cyclone_plots/stormsugre_windspeed.png"
+                                alt="Dot Plot of Parameters" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('webplot1')">Web Plot(1) of P1 Districts
+                            </h3>
+                            <img id="webplot1" src="./cyclone_plots/web1.png" alt="Web Plot 1 of Parameters"
+                                class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('webplot2')">Web Plot(2) of P1 Districts
+                            </h3>
+                            <img id="webplot2" src="./cyclone_plots/web2.png" alt="Web Plot 2 of Parameters"
+                                class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('monthlybargraph')">Monthly Frequency of
+                                Cyclones</h3>
+                            <img id="monthlybargraph" src="./cyclone_plots/monthlyfrequency.png"
+                                alt="Monthly Frequency of Cyclones" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('freqbargraph')">Cyclone Frequency of Very
+                                High Prone(P1) Districts</h3>
+                            <img id="freqbargraph" src="./cyclone_plots/frequencyp1.png" alt="Frequency of Cyclones"
+                                class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('statebarplot')">Average Wind Speed by
+                                State</h3>
+                            <img id="statebarplot" src="./cyclone_plots/avgstate.png" alt="Average Wind Speed by State"
+                                class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('statelineplot')">Average Wind Speed by
+                                State</h3>
+                            <img id="statelineplot" src="./cyclone_plots/avgpre.png"
+                                alt="Average Precipitation by State" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('stackedbar')">Total and Severe Cyclones
+                                of States</h3>
+                            <img id="stackedbar" src="./cyclone_plots/stacked.png"
+                                alt="Total and Severe Cyclones of States" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('pie')">Proportion of Severe Cyclones by
+                                State</h3>
+                            <img id="pie" src="./cyclone_plots/pie.png" alt="Proportion of Severe Cyclones"
+                                class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('impactbargraph')">Impact of Various
+                                Cyclone parameters</h3>
+                            <img id="impactbargraph" src="./cyclone_plots/p1impact.png" alt="Impact of Parameters"
+                                class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('yearbar')">Frequency of Cyclones by Year
+                            </h3>
+                            <img id="yearbar" src="./cyclone_plots/yearfre.png" alt="Frequency of Cyclones by Year"
+                                class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('yearplot')">Trend of WindSpeed over Years
+                            </h3>
+                            <img id="yearplot" src="./cyclone_plots/yearwind.png" alt="Trend of WindSpeed over Years"
+                                class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('yearp')">Trend of Pressure over Years
+                            </h3>
+                            <img id="yearp" src="./cyclone_plots/yearp.png" alt="Trend of Pressure over Years"
+                                class="chart-image" style="display: none;">
+                        </div>
+
+                    </div>
+                    <div id="cyclones-events" class="tab-content" style="display: none;">
+                        <div class="chart-container">
+                            <h3>Major Cyclone Events in India</h3>
+                            <table class="cyclone-table">
+                                <tr>
+                                    <th>Cyclone Name</th>
+                                    <th>Year</th>
+                                    <th>Lowest Pressure (mbar)</th>
+                                    <th>Peak Intensity</th>
+                                    <th>Affected Areas</th>
+                                    <th>Damage (USD)</th>
+                                    <th>Fatalities</th>
+                                </tr>
+                                <tr>
+                                    <td>Bhola Cyclone</td>
+                                    <td>1970</td>
+                                    <td>966</td>
+                                    <td>Super Cyclonic Storm</td>
+                                    <td>East India, Bangladesh</td>
+                                    <td>$86.4 million</td>
+                                    <td>300,000+</td>
+                                </tr>
+                                <tr>
+                                    <td>BOB 02</td>
+                                    <td>1990</td>
+                                    <td>920</td>
+                                    <td>Extremely Severe Cyclonic Storm</td>
+                                    <td>East Coast of India</td>
+                                    <td>Unknown</td>
+                                    <td>Many</td>
+                                </tr>
+                                <tr>
+                                    <td>Phailin</td>
+                                    <td>2013</td>
+                                    <td>940</td>
+                                    <td>Extremely Severe Cyclonic Storm</td>
+                                    <td>Odisha</td>
+                                    <td>$700 million</td>
+                                    <td>44</td>
+                                </tr>
+                                <tr>
+                                    <td>Hudhud</td>
+                                    <td>2014</td>
+                                    <td>940</td>
+                                    <td>Very Severe Cyclonic Storm</td>
+                                    <td>Andhra Pradesh, Odisha</td>
+                                    <td>$3.4 billion</td>
+                                    <td>124</td>
+                                </tr>
+                                <tr>
+                                    <td>Vardah</td>
+                                    <td>2016</td>
+                                    <td>982</td>
+                                    <td>Very Severe Cyclonic Storm</td>
+                                    <td>Tamil Nadu</td>
+                                    <td>$1 billion</td>
+                                    <td>18</td>
+                                </tr>
+                                <tr>
+                                    <td>Fani</td>
+                                    <td>2019</td>
+                                    <td>980</td>
+                                    <td>Extremely Severe Cyclonic Storm</td>
+                                    <td>Odisha, West Bengal</td>
+                                    <td>$8.1 billion</td>
+                                    <td>64</td>
+                                </tr>
+                                <tr>
+                                    <td>Amphan</td>
+                                    <td>2020</td>
+                                    <td>920</td>
+                                    <td>Super Cyclonic Storm</td>
+                                    <td>West Bengal, Bangladesh</td>
+                                    <td>$14 billion</td>
+                                    <td>129</td>
+                                </tr>
+                                <tr>
+                                    <td>Tauktae</td>
+                                    <td>2021</td>
+                                    <td>950</td>
+                                    <td>Extremely Severe Cyclonic Storm</td>
+                                    <td>Gujarat, Kerala, Karnataka, Goa, Maharashtra</td>
+                                    <td>Unknown</td>
+                                    <td>100+</td>
+                                </tr>
+                                <tr>
+                                    <td>Sidr</td>
+                                    <td>2007</td>
+                                    <td>944</td>
+                                    <td>Extremely Severe Cyclonic Storm</td>
+                                    <td>Bangladesh, West Bengal</td>
+                                    <td>$2.3 billion</td>
+                                    <td>3,447</td>
+                                </tr>
+                                <tr>
+                                    <td>Aila</td>
+                                    <td>2009</td>
+                                    <td>970</td>
+                                    <td>Severe Cyclonic Storm</td>
+                                    <td>West Bengal, Bangladesh</td>
+                                    <td>$1.7 billion</td>
+                                    <td>339</td>
+                                </tr>
+                                <tr>
+                                    <td>Kyarr</td>
+                                    <td>2019</td>
+                                    <td>920</td>
+                                    <td>Super Cyclonic Storm</td>
+                                    <td>Arabian Sea (No landfall)</td>
+                                    <td>Minimal</td>
+                                    <td>None</td>
+                                </tr>
+                                <tr>
+                                    <td>Ockhi</td>
+                                    <td>2017</td>
+                                    <td>975</td>
+                                    <td>Very Severe Cyclonic Storm</td>
+                                    <td>Tamil Nadu, Kerala</td>
+                                    <td>$920 million</td>
+                                    <td>245</td>
+                                </tr>
+                                <tr>
+                                    <td>Nilam</td>
+                                    <td>2012</td>
+                                    <td>982</td>
+                                    <td>Severe Cyclonic Storm</td>
+                                    <td>Tamil Nadu</td>
+                                    <td>$56 million</td>
+                                    <td>75</td>
+                                </tr>
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Earthquake SECTION -->
+                <div id="earthquake-content" style="display: none;">
+                    <!-- EARTHQUAKE OVERVIEW -->
+                    <div id="earthquake-overview" class="tab-content">
+                        <!-- STATS SECTION -->
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-title">Total Earthquakes</div>
+                                <div class="stat-value">14,698</div>
+                                <div class="stat-subtitle">Since 2000</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-title">Average Magnitude</div>
+                                <div class="stat-value">4.3</div>
+                                <div class="stat-subtitle">Richter scale</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-title">Unique Regions Affected</div>
+                                <div class="stat-value">2,419</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-title">Average Depth of Earthquakes</div>
+                                <div class="stat-value">54.5</div>
+                                <div class="stat-subtitle">km</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-title">Deepest Recorded Earthquake</div>
+                                <div class="stat-value">400 km</div>
+                                <div class="stat-subtitle">
+                                    2017-05-06 09:52:28 UTC<br>
+                                    Latitude: 36.6476<br>
+                                    Longitude: 71.5463<br>
+                                    Place: 4km SSE of Ashkasham, Afghanistan
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Charts Section -->
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('yearlyChart')">Yearly Trend Chart</h3>
+                            <img id="yearlyChart" src="quake_plots/per_year.png" alt="Yearly Trend Chart"
+                                class="chart-image" style="display: none;">
+                        </div>
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('monthlyChart')">Monthly Trend Chart</h3>
+                            <img id="monthlyChart" src="quake_plots/monthly.png" alt="Monthly Trend Chart"
+                                class="chart-image" style="display: none;">
+                        </div>
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('hourlyChart')">Hourly Trend Chart</h3>
+                            <img id="hourlyChart" src="quake_plots/hourly.png" alt="Hourly Trend Chart"
+                                class="chart-image" style="display: none;">
+                        </div>
+
+
+                        <!-- Additional Metrics -->
+                        <div class="metrics-grid">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">High Risk Zones</div>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-label">PLACE</span>
+                                    <span class="metric-value">MAGNITUDE</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-label">Andaman Islands</span>
+                                    <span class="metric-value">7.5</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-label">Nicobar Islands</span>
+                                    <span class="metric-value">7.2</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span class="metric-label">Gujarat</span>
+                                    <span class="metric-value">7.7</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="earthquake-magnitude" class="tab-content" style="display: none;">
+
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('correlationChart')">Correlation between
+                                magnitude and depth</h3>
+                            <img id="correlationChart" src="quake_plots/correlation_mag_depth.png"
+                                alt="Correlation between magnitude and depth" class="chart-image"
+                                style="display: none;">
+                        </div>
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('distributionChart')">Distribution of
+                                earthquake by magnitude range</h3>
+                            <img id="distributionChart" src="quake_plots/distribution_earthquake.png"
+                                alt="Distribution of earthquake by magnitude range" class="chart-image"
+                                style="display: none;">
+                        </div>
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('frequencyChart')">Frequency of different
+                                magnitude types</h3>
+                            <img id="frequencyChart" src="quake_plots/freq_mag_type.png"
+                                alt="Frequency of different magnitude types" class="chart-image" style="display: none;">
+                        </div>
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('actualPredictedChart')">Actual Vs
+                                Predicted magnitude</h3>
+                            <img id="actualPredictedChart" src="quake_plots/actual_predicted_mag.png"
+                                alt="Actual Vs Predicted magnitude" class="chart-image" style="display: none;">
+                        </div>
+
+
+                    </div>
+                    <div id="earthquake-trends" class="tab-content" style="display: none;">
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('aftershockChart')">Aftershock patterns in
+                                India</h3>
+                            <img id="aftershockChart" src="quake_plots/aftershock.png"
+                                alt="Aftershock patterns in India" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('yearlyCountsChart')">Year over Year
+                                earthquake counts</h3>
+                            <img id="yearlyCountsChart" src="quake_plots/year.png"
+                                alt="Year over Year earthquake counts" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('seasonalPatternsChart')">Seasonal
+                                patterns of earthquakes in India</h3>
+                            <img id="seasonalPatternsChart" src="quake_plots/seasonal.png"
+                                alt="Seasonal patterns of earthquakes in India" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('geoDistributionChart')">Earthquake
+                                Frequency by Latitude/longitude bands</h3>
+                            <img id="geoDistributionChart" src="quake_plots/hotspots.png"
+                                alt="Earthquake Frequency by Latitude/longitude bands" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('freqVsMagChart')">Frequency Vs Magnitude
+                                of earthquakes in India</h3>
+                            <img id="freqVsMagChart" src="quake_plots/freq_vs_mag.png"
+                                alt="Frequency Vs Magnitude of earthquakes in India" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('depthVariationChart')">Depth variation
+                                trends in Indian earthquakes</h3>
+                            <img id="depthVariationChart" src="quake_plots/depth_variation.png"
+                                alt="Depth variation trends in Indian earthquakes" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                    </div>
+                    <div id="earthquake-events" class="tab-content" style="display: none;">
+                        <div class="container2">
+                            <div class="section">
+                                <h2>Top 10 Strongest Earthquakes</h2>
+                                <table class="earthquake-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Date & Time</th>
+                                            <th>Magnitude</th>
+                                            <th>Location</th>
+                                            <th>Depth (km)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>2021-05-21 23:34:14</td>
+                                            <td class="magnitude">7.0</td>
+                                            <td>770km NNE of Pangin, Arunachal Pradesh, India</td>
+                                            <td><span class="depth-indicator">10.0</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2021-04-28 07:51:25</td>
+                                            <td class="magnitude">6.4</td>
+                                            <td>43km W of Tezpur, Assam, India</td>
+                                            <td><span class="depth-indicator">17.0</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2020-06-26 02:35:19</td>
+                                            <td class="magnitude">6.1</td>
+                                            <td>451km NE of Hanley, Jammu & Kashmir, India</td>
+                                            <td><span class="depth-indicator">10.0</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2020-01-07 11:35:19</td>
+                                            <td class="magnitude">6.1</td>
+                                            <td>577km SSE of Campbell Bay, Andaman and Nicobar, India</td>
+                                            <td><span class="depth-indicator">10.0</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2020-04-16 17:15:27</td>
+                                            <td class="magnitude">5.9</td>
+                                            <td>117km SE of Champhai, Mizoram, India</td>
+                                            <td><span class="depth-indicator">70.0</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2021-05-21 19:18:41</td>
+                                            <td class="magnitude">5.8</td>
+                                            <td>402km SE of Changlang, Arunachal Pradesh, India</td>
+                                            <td><span class="depth-indicator">100.0</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2021-03-19 11:41:32</td>
+                                            <td class="magnitude">5.8</td>
+                                            <td>459km NNW of Basar, Arunachal Pradesh, India</td>
+                                            <td><span class="depth-indicator">100.0</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2020-07-18 00:03:00</td>
+                                            <td class="magnitude">5.7</td>
+                                            <td>266km E of Portblair, Andaman and Nicobar Islands, India</td>
+                                            <td><span class="depth-indicator">10.0</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2021-03-29 22:57:24</td>
+                                            <td class="magnitude">5.6</td>
+                                            <td>760km N of Lachung, Sikkim, India</td>
+                                            <td><span class="depth-indicator">10.0</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2020-07-17 19:33:42</td>
+                                            <td class="magnitude">5.6</td>
+                                            <td>264km E of Portblair, Andaman and Nicobar Islands, India</td>
+                                            <td><span class="depth-indicator">10.0</span></td>
+                                        </tr>
+                                        <!-- Add more rows as needed -->
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="section">
+                                <h2>Notable Events Timeline</h2>
+                                <div class="timeline">
+                                    <div class="timeline-item">
+                                        <div class="timeline-date">2021-12-31</div>
+                                        <div class="magnitude">7.0</div>
+                                        <div>770km NNE of Pangin, Arunachal Pradesh, India</div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-date">2019-12-31</div>
+                                        <div class="magnitude">5.5</div>
+                                        <div>154km NW of Kargil, Laddakh, India</div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-date">2020-12-31</div>
+                                        <div class="magnitude">6.1</div>
+                                        <div>451km NE of Hanley, Jammu & Kashmir, India</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <h2>Major Earthquake Events Impact Analysis</h2>
+                                <div class="impact-analysis">
+                                    <table class="earthquake-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Date & Time</th>
+                                                <th>Magnitude</th>
+                                                <th>Location</th>
+                                                <th>Depth (km)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>2021-05-21 23:34:14</td>
+                                                <td class="magnitude">7.0</td>
+                                                <td>770km NNE of Pangin, Arunachal Pradesh, India</td>
+                                                <td><span class="depth-indicator">10.0</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>2021-04-28 07:51:25</td>
+                                                <td class="magnitude">6.4</td>
+                                                <td>43km W of Tezpur, Assam, India</td>
+                                                <td><span class="depth-indicator">17.0</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>2020-06-26 02:35:19</td>
+                                                <td class="magnitude">6.1</td>
+                                                <td>451km NE of Hanley, Jammu & Kashmir, India</td>
+                                                <td><span class="depth-indicator">10.0</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>2020-01-07 11:35:19</td>
+                                                <td class="magnitude">6.1</td>
+                                                <td>577km SSE of Campbell Bay, Andaman and Nicobar Islands, India</td>
+                                                <td><span class="depth-indicator">10.0</span></td>
+                                            </tr>
+                                            <!-- Add more rows as needed -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="landslide-content" style="display: none;">
+                    <div id="landslide-overview" class="tab-content">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-title">Total Landslides</div>
+                                <div class="stat-value">80,933</div>
+                                <div class="stat-subtitle">1998-2022</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-title">Proned Area</div>
+                                <div class="stat-value">0.42 million</div>
+                                <div class="stat-subtitle">sq km</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-title">Average annual landslide death count</div>
+                                <div class="stat-value">847</div>
+                                <div class="stat-subtitle">2001-2021</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-title">Average annual financial losses due to landslides</div>
+                                <div class="stat-value">$0.3 billion</div>
+                                <div class="stat-subtitle">2001-2021</div>
+                            </div>
+                        </div>
+                        <div class="dashboard-section">
+                            <h3>Landslide Impact in India</h3>
+                            <p>
+                                India is among the top four countries with highest landslide risk. It has been estimated
+                                that loss of life per 100 km2 is greater than one.
+                                It accounts for about 8 per cent of global fatalities due to landslides.
+                            </p>
+                            <h3>Distribution of Reported Landslides in India</h3>
+                            <ul>
+                                <li>66.5% in the Northwestern Himalayas</li>
+                                <li>18.8% in the Northeastern Himalayas</li>
+                                <li>14.7% in the Western Ghats</li>
+                            </ul>
+
+                            <h3>Landslide Prone States</h3>
+                            <table class="landslide-table">
+                                <tr>
+                                    <th>Landslide Prone Areas</th>
+                                    <th>States & Cities</th>
+                                </tr>
+                                <tr>
+                                    <td>Western Himalaya</td>
+                                    <td>Himachal Pradesh, Jammu & Kashmir, Uttar Pradesh, Uttaranchal</td>
+                                </tr>
+                                <tr>
+                                    <td>Eastern & North-Eastern Himalaya</td>
+                                    <td>West Bengal, Arunachal Pradesh, Sikkim</td>
+                                </tr>
+                                <tr>
+                                    <td>Naga-Arakan Mountain belts</td>
+                                    <td>Tripura, Nagaland, Mizoram, Manipur</td>
+                                </tr>
+                                <tr>
+                                    <td>Western Ghat region & Nilgiri</td>
+                                    <td>Kerala, Karnataka, Tamil Nadu, Maharashtra, Goa</td>
+                                </tr>
+                                <tr>
+                                    <td>Meghalaya Plateau comprising Peninsular India</td>
+                                    <td>North-eastern part of India</td>
+                                </tr>
+
+                            </table>
+                            <div class="chart-container">
+                                <h3 class="dropdown-heading" onclick="toggleChart('measure1')">Government Schemes to
+                                    mitigate Landslides</h3>
+                                <div id="measure1" style="display: none;">
+                                    <ul>
+                                        <li><strong>National Landslide Risk Management Strategy (2019):</strong>
+                                            Comprehensive approach covering hazard mapping, monitoring, early warning
+                                            systems, awareness, capacity building, policies, and stabilization measures.
+                                        </li>
+                                        <li><strong>Landslide Risk Mitigation Scheme (LRMS):</strong> Financial support
+                                            for mitigation projects in vulnerable states, focusing on disaster
+                                            prevention, early warning systems, and capacity building.</li>
+                                        <li><strong>Flood Risk Mitigation Scheme (FRMS):</strong> Initiative for flood
+                                            shelters, river basin-specific early warnings, and digital elevation maps
+                                            for preparedness and evacuation.</li>
+                                        <li><strong>Landslide Atlas of India:</strong> Detailed resource by NRSC (ISRO),
+                                            documenting landslide events, assessments, and insights in vulnerable areas.
+                                        </li>
+                                        <li><strong>National Landslide Susceptibility Mapping (NLSM) Programme:</strong>
+                                            Geological Survey of India (GSI) has completed landslide susceptibility
+                                            mapping.</li>
+                                        <li><strong>Indian Landslide Susceptibility Map (ILSM):</strong> IIT Delhi
+                                            created the first high-resolution map for landslide susceptibility in India.
+                                        </li>
+                                        <li><strong>National Landslide Forecasting Centre (NLFC):</strong> Launched in
+                                            Kolkata to establish a nationwide Landslide Early Warning System (LEWS) by
+                                            2030.</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="chart-container">
+                                <h3 class="dropdown-heading" onclick="toggleChart('measure2')">NDMA Guidelines for
+                                    Landslide Disaster Management</h3>
+                                <div id="measure2" style="display: none;">
+                                    <ul>
+                                        <li><strong>NDMA Guidelines for Landslide Management:</strong> Comprehensive
+                                            guidelines addressing hazard assessment, risk management, structural and
+                                            non-structural measures, institutional mechanisms, financial arrangements,
+                                            and community participation.</li>
+                                        <li><strong>Landslide Hazard, Vulnerability & Risk Assessment:</strong>
+                                            Identification of areas susceptible to landslides and assessment of at-risk
+                                            resources.</li>
+                                        <li><strong>Early Warning Systems for Landslides:</strong> Continuous monitoring
+                                            of movements and stress development with regular data transmission for early
+                                            warnings.</li>
+                                        <li><strong>Investigations for Landslide Risk Assessment:</strong>
+                                            Multi-disciplinary investigations to establish standards for mitigating
+                                            landslide impacts.</li>
+                                    </ul>
+
+                                </div>
+                            </div>
+
+                            <div class="chart-container">
+                                <h3 class="dropdown-heading" onclick="toggleChart('measure3')">Landslide: Do's and
+                                    Don'ts</h3>
+                                <div id="measure3" style="display: none;">
+                                    <ul>
+                                        <li><strong>Do's:</strong>
+                                            <ul>
+                                                <li>Prepare tours to hilly regions based on weather or news reports.
+                                                </li>
+                                                <li>Move away from landslide paths or downstream valleys quickly.</li>
+                                                <li>Keep drains clean and clear of debris (litter, leaves, etc.).</li>
+                                                <li>Grow trees to stabilize soil.</li>
+                                                <li>Identify areas of rock fall or cracks indicating landslides and move
+                                                    to safer areas.</li>
+                                                <li>Notice signals like muddy river waters indicating upstream
+                                                    landslides.</li>
+                                                <li>Contact nearest Tehsil or District Headquarters in case of danger.
+                                                </li>
+                                                <li>Ensure slopes are not cut and trees are not uprooted unless
+                                                    re-vegetation is planned.</li>
+                                                <li>Listen for unusual sounds like cracking trees or rolling boulders.
+                                                </li>
+                                                <li>Stay alert, awake, and active during possible impacts.</li>
+                                                <li>Locate and go to shelters, stay with family and companions.</li>
+                                                <li>Check for injured or trapped people.</li>
+                                                <li>Learn emergency communication signals for rescue teams.</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Don'ts:</strong>
+                                            <ul>
+                                                <li>Avoid construction or staying in vulnerable areas.</li>
+                                                <li>Do not panic or waste energy.</li>
+                                                <li>Do not touch loose materials or electrical wiring.</li>
+                                                <li>Avoid building houses near steep slopes or drainage paths.</li>
+                                                <li>Do not drink contaminated water, but rainwater is safe if collected
+                                                    properly.</li>
+                                                <li>Do not move an injured person without proper first aid unless in
+                                                    immediate danger.</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                    <p style="text-align: center; font-size: 14px;">&copy; Copyright NDMA</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div id="landslide-magnitude" class="tab-content" style="display: none;">
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('scatterplotChart')">Scatterplot of
+                                Landslides Over the Years</h3>
+                            <img id="scatterplotChart" src="./disaster_plots/Landslide_Locations_on_India_Map.png"
+                                alt="Scatterplot of Landslides Over the Years" class="chart-image"
+                                style="display: none;">
+                        </div>
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('scatterplotCharta')">Density of Landslide
+                                Locations</h3>
+                            <img id="scatterplotCharta" src="./disaster_plots/Density of Landslide Locations.png"
+                                alt="Scatterplot of Landslides Over the Years" class="chart-image"
+                                style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('sizeDistributionChart')">Distribution of
+                                Landslide Sizes</h3>
+                            <img id="sizeDistributionChart" src="./disaster_plots/Distribution of Landslide sizes.png"
+                                alt="Distribution of Landslide Sizes" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('triggerDistributionChart')">Distribution
+                                of Landslide Triggers</h3>
+                            <img id="triggerDistributionChart"
+                                src="./disaster_plots/Distribution of Landslides Triggers.png"
+                                alt="Distribution of Landslide Triggers" class="chart-image" style="display: none;">
+                        </div>
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('triggerDistributionCharta')">Landslide
+                                Size Distribution by State</h3>
+                            <img id="triggerDistributionCharta"
+                                src="./disaster_plots/Landslide Size Distribution by State.png"
+                                alt="Distribution of Landslide Triggers" class="chart-image" style="display: none;">
+                        </div>
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('triggerDistributionChartb')">Landslide
+                                Trigger Frequency by State</h3>
+                            <img id="triggerDistributionChartb"
+                                src="./disaster_plots/Landslide Trigger Frequency by State.png"
+                                alt="Distribution of Landslide Triggers" class="chart-image" style="display: none;">
+                        </div>
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('triggerDistributionChartc')">Landslide
+                                Trigger vs. Landslide Size</h3>
+                            <img id="triggerDistributionChartc"
+                                src="./disaster_plots/Landslide Trigger vs. Landslide Size.png"
+                                alt="Distribution of Landslide Triggers" class="chart-image" style="display: none;">
+                        </div>
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('triggerDistributionChartd')">Location
+                                Accuracy by State</h3>
+                            <img id="triggerDistributionChartd" src="./disaster_plots/Local Accuracy by State.png"
+                                alt="Distribution of Landslide Triggers" class="chart-image" style="display: none;">
+                        </div>
+                    </div>
+
+                    <div id="landslide-trends" class="tab-content" style="display: none;">
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('pieChart4')">Trend of Landslides Over the
+                                Years</h3>
+                            <img id="pieChart4" src="./disaster_plots/Trend of Landslides Over the Years.png"
+                                alt="Trend of Landslides Over the Years" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('pieChart1')">Number of landslides per
+                                year</h3>
+                            <img id="pieChart1" src="./disaster_plots/No.of Landlsides per year.png"
+                                alt="Number of Landslides per Year" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('pieChart2')">Number of landslides per
+                                state</h3>
+                            <img id="pieChart2" src="./disaster_plots/No.of Landlsides per state.png"
+                                alt="Number of Landslides per State" class="chart-image" style="display: none;">
+                        </div>
+
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('pieChart3')">Number of landslides by
+                                month</h3>
+                            <img id="pieChart3" src="./disaster_plots/No of Landslides by month.png"
+                                alt="Number of Landslides by Month" class="chart-image" style="display: none;">
+                        </div>
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('pieChart6')">Heatmap of Landslides</h3>
+                            <img id="pieChart6" src="./disaster_plots/Heatmap of Landslides.png"
+                                alt="Heatmap of Landslides" class="chart-image" style="display: none;">
+                        </div>
+                        <div class="chart-container">
+                            <h3 class="dropdown-heading" onclick="toggleChart('pieChart5')">Location Accuracy Over the
+                                Years</h3>
+                            <img id="pieChart5" src="./disaster_plots/Local Accuracy Over the Years.png"
+                                alt="Heatmap of Landslides" class="chart-image" style="display: none;">
+                        </div>
+
+
+                    </div>
+
+                    <div id="landslide-events" class="tab-content" style="display: none;">
+                        <div class="chart-container">
+                            <h3>Major Landslide Events</h3>
+                            <table class="landslide-major">
+                                <tr id="table-heading">
+                                    <th>Major Landslides</th>
+                                    <th>Year</th>
+                                    <th>Factor Responsible</th>
+                                    <th>Impact</th>
+                                </tr>
+                                <tr>
+                                    <td>Guwahati, Assam</td>
+                                    <td>1948</td>
+                                    <td>Heavy Rain</td>
+                                    <td>500 fatalities,destroying entire village</td>
+                                </tr>
+                                <tr>
+                                    <td>Darjeeling, West Bengal</td>
+                                    <td>1968</td>
+                                    <td>Flood</td>
+                                    <td>Over 1,000 fatalities, with a 60 km highway split into 91 sections.</td>
+                                </tr>
+                                <tr>
+                                    <td>Malpa, Uttarakhand</td>
+                                    <td>1998</td>
+                                    <td>Earthquake</td>
+                                    <td>An entire village with 380 people was washed away</td>
+                                </tr>
+                                <tr>
+                                    <td>Mumbai, Maharashtra</td>
+                                    <td>2000</td>
+                                    <td>Heavy Rain</td>
+                                    <td>67 fatalities</td>
+                                </tr>
+                                <tr>
+                                    <td>Amboori, Kerala</td>
+                                    <td>2001</td>
+                                    <td>Heavy Rain</td>
+                                    <td>40 fatalities</td>
+                                </tr>
+                                <tr>
+                                    <td>Kedarnath, Uttarakhand</td>
+                                    <td>2013</td>
+                                    <td>Flood</td>
+                                    <td>5700 fatalities, and 42,00 villages were affected</td>
+                                </tr>
+                                <tr>
+                                    <td>Malin, Maharashtra</td>
+                                    <td>2014</td>
+                                    <td>Heavy Rain</td>
+                                    <td>151 fatalities</td>
+                                </tr>
+                                <tr>
+                                    <td>Karimgang and Hilakandi, Assam</td>
+                                    <td>2016</td>
+                                    <td>Pre-Monsoon precipitation</td>
+                                    <td>More than 50 fatalities and severe damage to agricultural land, cattle, and
+                                        properties.</td>
+                                </tr>
+                                <tr>
+                                    <td>Kotrupi, Himachal Pradesh</td>
+                                    <td>2017</td>
+                                    <td>Excessive Rain</td>
+                                    <td>More than 50 fatalities</td>
+                                </tr>
+                                <tr>
+                                    <td>Kuwari, Uttarakhand</td>
+                                    <td>2018</td>
+                                    <td>Heavy Rain</td>
+                                    <td>More than 400 fatalities, and 106 houses perished</td>
+                                </tr>
+                                <tr>
+                                    <td>Pettimudi, Kerala</td>
+                                    <td>2020</td>
+                                    <td>Incessant rain</td>
+                                    <td>80 fatalities</td>
+                                </tr>
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+    <script>
+        let currentDisaster = '';
+        let currentSection = 'main';
+
+        function showSubOptions(type) {
+            document.getElementById('main-options').style.display = 'none';
+            if (type === 'climate') {
+                document.getElementById('climate-options').style.display = 'grid';
+                currentSection = 'climate';
+            } else {
+                document.getElementById('disaster-options').style.display = 'grid';
+                currentSection = 'disasters';
+            }
+        }
+
+        function goBack(target) {
+            if (target === 'main') {
+                document.getElementById('climate-options').style.display = 'none';
+                document.getElementById('disaster-options').style.display = 'none';
+                document.getElementById('main-options').style.display = 'grid';
+                currentSection = 'main';
+            } else if (target === 'options') {
+                document.getElementById('dashboard').style.display = 'none';
+                if (currentSection === 'climate') {
+                    document.getElementById('climate-options').style.display = 'grid';
+                } else {
+                    document.getElementById('disaster-options').style.display = 'grid';
+                }
+            }
+        }
+
+
+
+
+        function capitalizeFirstLetter(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        function showDashboard(type) {
+            document.getElementById('climate-options').style.display = 'none';
+            document.getElementById('disaster-options').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            
+            // Hide all content divs
+            const contentDivs = ['floods-content', 'cyclones-content', 'earthquake-content', 'landslide-content','temperature-content', 'rainfall-content'];
+            contentDivs.forEach(div => {
+                document.getElementById(div).style.display = 'none';
+            });
+            
+            // Show selected content
+            document.getElementById(`${type}-content`).style.display = 'block';
+            document.getElementById('dashboard-title').textContent = type.charAt(0).toUpperCase() + type.slice(1) + ' Analysis';
+            currentDisaster = type;
+            
+            // Reset to overview tab
+            switchTab('overview');
+        }
+
+
+
+        function switchTab(tab) {
+            // Update tab styles
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Hide all tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            // Show selected tab content
+            document.getElementById(`${currentDisaster}-${tab}`).style.display = 'block';
+        }
+
+    </script>
+    <script>
+        function toggleChart(chartId) {
+            const chart = document.getElementById(chartId);
+            
+            // Toggle visibility of the chart
+            if (chart.style.display === 'none' || chart.style.display === '') {
+                chart.style.display = 'block';
+            } else {
+                chart.style.display = 'none';
+            }
+        }
+    </script>
+
+</body>
+
+</html>
